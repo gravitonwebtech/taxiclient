@@ -1,0 +1,14 @@
+.home-banner-section {
+    background-image: url("../Assests/Homepageimages/slider1.jpg");
+    background-attachment: fixed;
+    height: 100vh;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  @media (max-width: 768px){
+    .home-banner-section {
+      height:auto;
+  }
+  }

@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Patua+One&family=Poppins&display=swap");
+
+.location-banner-image {
+  background-image: url("../Assests/Locationimage/LocationBaneer.jfif");
+  object-fit: cover;
+  min-height: 400px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+@media (max-width: 768px) {
+  .location-banner-image {
+    min-height: 500px;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+/* .location-banner-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+  } */

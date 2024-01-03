@@ -1,0 +1,32 @@
+ul.footer-contact li a {
+    text-decoration: none;
+    color: white;
+    font-size: 500;
+    font-weight: 600;
+  }
+  .footer-icon {
+    padding-right: 15px;
+    color: #f0bb3a;
+  }
+  .social-icon {
+    color: #fff;
+  }
+  .social-link a {
+    display: inline-block;
+    background-color: #f0bb3a;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    line-height: 30px;
+    text-align: center;
+    margin: 5px;
+  }
+  .footer-text {
+    color: #f0bb3a;
+    font-size: 20px;
+    font-weight:500;
+  }
+  
+  a .footer-text {
+    text-decoration: none !important;
+  }

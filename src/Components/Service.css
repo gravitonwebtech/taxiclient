@@ -1,0 +1,13 @@
+.service-banner-img{
+    background-image: url("../Assests/Servicesimages/servicesbanner.jpg");
+    height:30vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  @media (max-width: 768px){
+      .service-banner-img{
+        height:20vh;
+    }
+    }

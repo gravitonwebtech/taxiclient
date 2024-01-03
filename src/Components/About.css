@@ -1,0 +1,13 @@
+.about-banner-img{
+    background-image: url("../Assests/Homepageimages/slider2.jpg");
+    height:40vh;
+    background-position:right;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+ 
+  @media (max-width: 768px){
+    .about-banner-img{
+      height:20vh;
+  }
+  }
