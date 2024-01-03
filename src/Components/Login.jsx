@@ -2,15 +2,33 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-function Login() {
+function Login({ onClose }) {
   const [loginFormData, setLoginFormData] = useState({
     email: "",
     password: "",
   });
 
+  const [registrationFormData, setRegistrationFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    rePassword: "",
+    phoneNumber: "",
+  });
+
+  const [isLogin, setIsLogin] = useState(true);
+
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLoginFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleRegistrationChange = (e) => {
+    const { name, value } = e.target;
+    setRegistrationFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -26,34 +44,11 @@ function Login() {
     });
   };
 
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    rePassword: "",
-    phoneNumber: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleRegistrationSubmit = (e) => {
     e.preventDefault();
-
-    if (isLogin) {
-      // Implement login logic here
-      console.log("Login clicked", loginFormData);
-    } else {
-      // Implement registration logic here
-      console.log("Registration clicked", formData);
-    }
-
-    setFormData({
+    // Implement registration logic here using registrationFormData
+    console.log("Registration clicked", registrationFormData);
+    setRegistrationFormData({
       fullName: "",
       email: "",
       password: "",
@@ -62,37 +57,24 @@ function Login() {
     });
   };
 
-  const [isLogin, setIsLogin] = useState(true);
-  const [isFormOpen, setIsFormOpen] = useState(true);
-
-  const handleToggle = () => {
-    setIsLogin(!isLogin);
-  };
-
-  const handleCancel = () => {
-    setIsLogin(true);
-    setFormData({
-      fullName: "",
-      email: "",
-      password: "",
-      rePassword: "",
-      phoneNumber: "",
-    });
-  };
 
   const handleClose = () => {
-    setIsFormOpen(false);
+    onClose();
     console.log("Form closed");
   };
 
-  if (!isFormOpen) {
-    return null;
-  }
+  const showLogin = () => {
+    setIsLogin(true);
+  };
+
+  const showRegistration = () => {
+    setIsLogin(false);
+  };
 
   return (
     <>
-      <div className="flex justify-center items-center h-screen">
-        <div className="bg-white shadow-lg border-2 border-gray-200 rounded w-[400px] mx-5 p-3">
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div className="bg-white shadow-lg border-2 border-gray-200 rounded w-[400px] p-3 mx-5 md:mx-0">
           <div className="flex justify-between items-center mb-5">
             <h1 className="text-2xl font-semibold">
               {isLogin ? "Login" : "Register"}
@@ -105,7 +87,7 @@ function Login() {
               <FontAwesomeIcon icon={faTimes} />
             </button>
           </div>
-          <form onSubmit={isLogin ? handleLoginSubmit : handleSubmit}>
+          <form onSubmit={isLogin ? handleLoginSubmit : handleRegistrationSubmit}>
             {isLogin ? (
               <div>
                 <p>
@@ -130,23 +112,23 @@ function Login() {
                   />
                 </p>
 
-                <div className="mt-4 flex justify-end">
+                <div className="mt-4 flex justify-end cursor-pointer">
                   <h1 className="text-[#42B5DE]">Forget Password?</h1>
                 </div>
 
                 <div className="mt-5 flex justify-end">
                   <button
-                    type="button"
-                    onClick={handleToggle}
-                    className="bg-[#FFC61A] text-white rounded px-4 py-2 mr-2"
-                  >
-                    Register
-                  </button>
-                  <button
                     type="submit"
                     className="bg-[#FFC61A] text-white rounded px-4 py-2"
                   >
                     Login
+                  </button>
+                  <button
+                    type="button"
+                    onClick={showRegistration}
+                    className="bg-[#FFC61A] text-white rounded px-4 py-2 ml-2"
+                  >
+                    Register
                   </button>
                 </div>
               </div>
@@ -156,8 +138,8 @@ function Login() {
                   <input
                     type="text"
                     name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
+                    value={registrationFormData.fullName}
+                    onChange={handleRegistrationChange}
                     placeholder="Fullname"
                     className="border border-gray-300 w-full px-3 py-2 mb-4 rounded"
                   />
@@ -167,8 +149,8 @@ function Login() {
                   <input
                     type="text"
                     name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
+                    value={registrationFormData.phoneNumber}
+                    onChange={handleRegistrationChange}
                     placeholder="Phone Number"
                     className="border border-gray-300 w-full px-3 py-2 mb-4 rounded"
                   />
@@ -177,8 +159,8 @@ function Login() {
                   <input
                     type="email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    value={registrationFormData.email}
+                    onChange={handleRegistrationChange}
                     placeholder="Enter Email"
                     className="border border-gray-300 w-full px-3 py-2 mb-4 rounded"
                   />
@@ -188,8 +170,8 @@ function Login() {
                   <input
                     type="password"
                     name="password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    value={registrationFormData.password}
+                    onChange={handleRegistrationChange}
                     placeholder="Enter Password"
                     className="border border-gray-300 w-full px-3 py-2 mb-4 rounded"
                   />
@@ -199,8 +181,8 @@ function Login() {
                   <input
                     type="password"
                     name="rePassword"
-                    value={formData.rePassword}
-                    onChange={handleChange}
+                    value={registrationFormData.rePassword}
+                    onChange={handleRegistrationChange}
                     placeholder="Re-enter Password"
                     className="border border-gray-300 w-full px-3 py-2 rounded"
                   />
@@ -209,10 +191,10 @@ function Login() {
                 <div className="mt-5 flex justify-end">
                   <button
                     type="button"
-                    onClick={handleCancel}
+                    onClick={showLogin}
                     className="bg-[#808080] text-white rounded px-4 py-2 mr-2"
                   >
-                    Cancel
+                    Login
                   </button>
                   <button
                     type="submit"

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import Logo from "../Common/Images/Logo.jpeg"
+import Logo from "../Common/Images/Logo.jpeg";
+import Login from "../Components/Login";
 
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -33,6 +34,13 @@ const Navbar = () => {
 
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
+
+  const openLoginForm = () => {
+    setIsLoginFormVisible(true);
+    setIsDrawerOpen(false);
+  };
 
   return (
     <>
@@ -237,7 +245,7 @@ const Navbar = () => {
                   </Link>
                 </li>
 
-                <li>
+                {/* <li>
                   <Link
                     to="/login"
                     className="hover:text-blue-500"
@@ -245,8 +253,16 @@ const Navbar = () => {
                   >
                     Login
                   </Link>
-                </li>
+                </li> */}
 
+                <li>
+                  <button
+                    onClick={() => openLoginForm()}
+                    className="hover:text-blue-500"
+                  >
+                    Login
+                  </button>
+                </li>
               </ul>
             </div>
           )}
@@ -372,7 +388,7 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <li>
+            {/* <li>
               <Link
                 to="/login"
                 className="hover:text-blue-500"
@@ -380,10 +396,24 @@ const Navbar = () => {
               >
                 Login
               </Link>
+            </li> */}
+
+            <li>
+              <button
+                onClick={() => openLoginForm()}
+                className="hover:text-blue-500"
+              >
+                Login
+              </button>
             </li>
           </ul>
         </div>
       </nav>
+
+      {/* Login Popup */}
+      {isLoginFormVisible && (
+        <Login onClose={() => setIsLoginFormVisible(false)} />
+      )}
     </>
   );
 };

@@ -5,16 +5,22 @@ import Car1 from "../Assests/Homepageimages/car1.png";
 import Car2 from "../Assests/Homepageimages/car2.png";
 import Car3 from "../Assests/Homepageimages/car3.png";
 import Car4 from "../Assests/Homepageimages/car4.png";
-import Service1 from "../Assests/Homepageimages/services-1.png";
-import Service2 from "../Assests/Homepageimages/services-2.png";
-import Service3 from "../Assests/Homepageimages/services-3.png";
-import Service4 from "../Assests/Homepageimages/services-4.png";
 import Traffic1 from "../Assests/Homepageimages/tariff-1.png";
 import Traffic2 from "../Assests/Homepageimages/tariff-2.png";
 import Traffic3 from "../Assests/Homepageimages/tariff-3.png";
 import Traffic4 from "../Assests/Homepageimages/tariff-4.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faServicestack } from "@fortawesome/free-brands-svg-icons";
+import {
+  faCheck,
+  faBriefcase,
+  faCarSide,
+  faHotel,
+  faPlane,
+  faRoad,
+  faShoppingCart,
+  faTruck,
+} from "@fortawesome/free-solid-svg-icons";
 import "./Home.css";
 
 export default function Home() {
@@ -117,71 +123,123 @@ export default function Home() {
         ))}
       </div>
       <div
-        className="absolute w-[90%] sm:w-1/2 md:w-auto top-1/2 left-1/2 md:top-1/2 md:left-1/2 
-      xl:left-1/4 xl:top-[40%] transform -translate-x-1/2 -translate-y-1/2 bg-white shadow rounded p-5 md:p-8"
+        className="absolute grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10 pt-24 md:pt-32 px-5 md:px-10 xl:px-20"
       >
-        <form>
-          <h1 className="text-center text-xl md:text-2xl font-bold">GET TAXI 
-          <span className="text-[#FFC61A]"> ONLINE</span></h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 mt-5">
-            <p>
-              <input
-                type="text"
-                id="fromaddress"
-                required
-                name="fromaddress"
-                placeholder="From Address..."
-                className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
-              />
-            </p>
-            <p>
-              <input
-                type="text"
-                id="toaddress"
-                name="toaddress"
-                placeholder="To Address...."
-                required
-                className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
-              />
-            </p>
-            <p>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                required
-                placeholder="Phone Number"
-                className="w-full  text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
-              />
-            </p>
-            <p>
-              <input
-                type="text"
-                id="datetime"
-                name="datetime"
-                placeholder="Date and Time"
-                required
-                className="w-full text-gray-500 border-2 border-grayy-100 rounded px-5 py-2"
-              />
-            </p>
-          </div>
+        <div className="bg-white shadow rounded p-5 md:p-8 md:w-[600px]">
+            <form onSubmit={handleSubmit}>
+              <h1 className="text-center text-xl md:text-2xl font-bold">
+                GET TAXI
+                <span className="text-[#FFC61A]"> ONLINE</span>
+              </h1>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-5">
+                <div className="bg-[#FFC61A] flex justify-center p-5 rounded">
+                  <img src={Car1}></img>
+                </div>
 
-          <div className="flex justify-center mt-5 md:mt-10">
-            <button
-              type="submit"
-              className="px-5 py-2 text-black font-semibold border-2 border-gray-100 
-                text-lg rounded-[30px] bg-[#FFC61A]"
-            >
-              GET TAXI
-            </button>
+                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
+                  <img src={Car2}></img>
+                </div>
+
+                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
+                  <img src={Car3}></img>
+                </div>
+
+                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
+                  <img src={Car4}></img>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 mt-5 md:mt-10">
+                <p>
+                  <input
+                    type="text"
+                    id="fromaddress"
+                    name="fromaddress"
+                    placeholder="From Address..."
+                    value={formData.fromaddress}
+                    onChange={handleInputChange}
+                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
+                      formErrors.fromaddress && "border-red-500"
+                    }`}
+                  />
+                  {formErrors.fromaddress && (
+                    <span className="text-red-500">
+                      {formErrors.fromaddress}
+                    </span>
+                  )}
+                </p>
+                <p>
+                  <input
+                    type="text"
+                    id="toaddress"
+                    name="toaddress"
+                    placeholder="To Address...."
+                    value={formData.toaddress}
+                    onChange={handleInputChange}
+                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
+                      formErrors.toaddress && "border-red-500"
+                    }`}
+                  />
+                  {formErrors.toaddress && (
+                    <span className="text-red-500">{formErrors.toaddress}</span>
+                  )}
+                </p>
+                <p>
+                  <input
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    placeholder="Phone Number"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
+                      formErrors.phone && "border-red-500"
+                    }`}
+                  />
+                  {formErrors.phone && (
+                    <span className="text-red-500">{formErrors.phone}</span>
+                  )}
+                </p>
+                <p>
+                  <input
+                    type="text"
+                    id="datetime"
+                    name="datetime"
+                    placeholder="Date and Time"
+                    value={formData.datetime}
+                    onChange={handleInputChange}
+                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
+                      formErrors.datetime && "border-red-500"
+                    }`}
+                  />
+                  {formErrors.datetime && (
+                    <span className="text-red-500">{formErrors.datetime}</span>
+                  )}
+                </p>
+              </div>
+
+              {formErrors.general && (
+                <div className="text-red-500 text-center mt-2">
+                  {formErrors.general}
+                </div>
+              )}
+
+              <div className="flex justify-center mt-5 md:mt-10">
+                <button
+                  type="submit"
+                  className="px-5 py-2 text-black font-bold border-2 border-gray-100 
+        text-lg rounded-[30px] bg-[#FFC61A]"
+                >
+                  GET TAXI
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
       </div>
-    </div> */}
+      </div> */}
 
       {/* banner */}
       <div className="home-banner-section mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-24 md:pt-32 px-5 md:px-10 xl:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-14 md:pt-32 px-5 md:px-10 xl:px-20">
           <div className="bg-white shadow rounded p-5 md:p-8 md:w-[600px]">
             <form onSubmit={handleSubmit}>
               <h1 className="text-center text-xl md:text-2xl font-bold">
@@ -300,22 +358,51 @@ export default function Home() {
         <h1 className=" font-bold text-2xl md:text-4xl mt-3">Our Services</h1>
       </div>
 
-      <div className="grid grid-col-1 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10  xl:gap-20 mt-10 md:mt-20 mx-5 sm:mx-10 md:mx-20 lg:mx-28">
+      <div className="grid grid-col-1 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10 xl:gap-20 mt-10 md:mt-20 mx-5 sm:mx-10 md:mx-20 lg:mx-28">
         <div className="">
-          <div className="">
-            <img src={Service1} alt="" />
-          </div>
-          <h1 className="mt-5 font-bold text-xl">RAPID CITY TRANSFER</h1>
+          <FontAwesomeIcon
+            icon={faPlane}
+            className="text-2xl md:text-4xl text-[#FFD03F]"
+          />
+          <h1 className="mt-5 font-bold text-xl">AIRPORT PICKUP & DROP</h1>
           <p className="mt-3 text-justify text-[#737373]">
-            We will bring you quickly and comfortably to anywhere in your city.
+            Providing convenient airport pickup and drop services, our reliable
+            transportation ensures timely arrivals and departures.
           </p>
         </div>
 
         <div className="">
-          <div className="">
-            <img src={Service2} alt="" />
-          </div>
-          <h1 className="mt-5 font-bold text-xl">BOOKING A HOTEL</h1>
+          <FontAwesomeIcon
+            icon={faBriefcase}
+            className="text-2xl md:text-4xl text-[#FFD03F]"
+          />
+          <h1 className="mt-5 font-bold text-xl">OFFICE PICKUP & DROP</h1>
+          <p className="mt-3 text-justify text-[#737373]">
+            Efficient office pickup and drop for a seamless daily commute,
+            ensuring punctuality and convenience for professionals.
+          </p>
+        </div>
+
+        <div className="">
+          <FontAwesomeIcon
+            icon={faHotel}
+            className="text-2xl md:text-4xl text-[#FFD03F]"
+          />
+          <h1 className="mt-5 font-bold text-xl">
+            MARRIAGE & PARTY GUEST PICKUP & DROP
+          </h1>
+          <p className="mt-3 text-justify text-[#737373]">
+            Efficient event transportation for seamless logistics, ensuring
+            guests' comfort and timely arrivals.
+          </p>
+        </div>
+
+        <div className="">
+          <FontAwesomeIcon
+            icon={faTruck}
+            className="text-2xl md:text-4xl text-[#FFD03F]"
+          />
+          <h1 className="mt-5 font-bold text-xl">EVENT TRANSPORTATION</h1>
           <p className="mt-3 text-justify text-[#737373]">
             If you need a comfortable hotel, our operators will book it for you,
             and take a taxi to the address.
@@ -323,23 +410,55 @@ export default function Home() {
         </div>
 
         <div className="">
-          <div className="">
-            <img src={Service3} alt="" />
-          </div>
-          <h1 className="mt-5 font-bold text-xl">AIRPORT TRANSFER</h1>
+          <FontAwesomeIcon
+            icon={faCarSide}
+            className="text-2xl md:text-4xl text-[#FFD03F]"
+          />
+          <h1 className="mt-5 font-bold text-xl">TRAVEL ANYWHERE IN M.P</h1>
           <p className="mt-3 text-justify text-[#737373]">
-            We will bring you quickly and comfortably to anywhere in your city.
+            Explore Madhya Pradesh effortlessly with our reliable travel
+            services, ensuring comfort, convenience, and safety for your
+            journey.
           </p>
         </div>
 
         <div className="">
-          <div className="">
-            <img src={Service4} alt="" />
-          </div>
-          <h1 className="mt-5 font-bold text-xl">BAGGAGE TRANSPORT</h1>
+          <FontAwesomeIcon
+            icon={faRoad}
+            className="text-2xl md:text-4xl text-[#FFD03F]"
+          />
+          <h1 className="mt-5 font-bold text-xl">
+            OUTSTATION TRAVELLING (ALL OVER INDIA)
+          </h1>
           <p className="mt-3 text-justify text-[#737373]">
-            If you need a comfortable hotel, our operators will book it for you,
-            and take a taxi to the address.
+            Safe, comfortable outstation travel across India for a memorable
+            journey experience.
+          </p>
+        </div>
+
+        <div className="">
+          <FontAwesomeIcon
+            icon={faServicestack}
+            className="text-2xl md:text-4xl text-[#FFD03F]"
+          />
+          <h1 className="mt-5 font-bold text-xl">
+            HOURLY RENTAL SERVICE WITH DRIVER
+          </h1>
+          <p className="mt-3 text-justify text-[#737373]">
+            Enjoy a flexible hourly rental service with a skilled driver for a
+            convenient experience.
+          </p>
+        </div>
+
+        <div className="">
+          <FontAwesomeIcon
+            icon={faShoppingCart}
+            className="text-2xl md:text-4xl text-[#FFD03F]"
+          />
+          <h1 className="mt-5 font-bold text-xl">WATERPROOF LUGGAGE CARRIER</h1>
+          <p className="mt-3 text-justify text-[#737373]">
+            Reliable waterproof luggage carrier for safe and secure
+            transportation of belongings in any weather condition.
           </p>
         </div>
       </div>
@@ -355,12 +474,14 @@ export default function Home() {
           <div className="flex justify-center">
             <img src={Traffic1} alt="" />
           </div>
-          <h1 className="mt-5 md:mt-14 font-bold text-xl text-center">STANDARD</h1>
+          <h1 className="mt-5 md:mt-14 font-bold text-xl text-center">
+            STANDARD
+          </h1>
           <p className="mt-4  text-[#737373] text-center">
             Standard sedan for a drive around the city at your service.
           </p>
           <div class="text-3xl font-bold text-center mt-4">
-            $2<span className="text-xl font-bold"> /km </span>
+          &#x20B9;4<span className="text-xl font-bold"> /km </span>
           </div>
         </div>
 
@@ -368,12 +489,14 @@ export default function Home() {
           <div className="flex justify-center">
             <img src={Traffic2} alt="" />
           </div>
-          <h1 className="mt-5 md:mt-10 font-bold text-xl text-center">BUSINESS</h1>
+          <h1 className="mt-5 md:mt-10 font-bold text-xl text-center">
+            BUSINESS
+          </h1>
           <p className="mt-4  text-[#737373] text-center">
             Standard sedan for a drive around the city at your service.
           </p>
           <div class="text-3xl font-bold text-center mt-4">
-            $2,7<span className="text-xl font-bold"> /km </span>
+          &#x20B9;3.5<span className="text-xl font-bold"> /km </span>
           </div>
         </div>
 
@@ -386,7 +509,7 @@ export default function Home() {
             Standard sedan for a drive around the city at your service.
           </p>
           <div class="text-3xl font-bold text-center mt-4">
-            $5<span className="text-xl font-bold"> /km </span>
+          &#x20B9;7<span className="text-xl font-bold"> /km </span>
           </div>
         </div>
 
@@ -399,7 +522,7 @@ export default function Home() {
             Standard sedan for a drive around the city at your service.
           </p>
           <div class="text-3xl font-bold text-center mt-4">
-            $4.5<span className="text-xl font-bold"> /km </span>
+          &#x20B9;5.6<span className="text-xl font-bold"> /km </span>
           </div>
         </div>
       </div>
@@ -500,7 +623,7 @@ export default function Home() {
                   className="text-[#FFC61A] text-xl font-bold mr-4"
                 />
                 <span className="text-[#737373]  font-semibold text-lg">
-                No fee
+                  No fee
                 </span>
               </p>
 
@@ -510,19 +633,19 @@ export default function Home() {
                   className="text-[#FFC61A] text-xl font-bold mr-4"
                 />
                 <span className="text-[#737373]  font-semibold text-lg">
-                Weekly payment
+                  Weekly payment
                 </span>
               </p>
             </div>
 
             <div className="">
-            <p>
+              <p>
                 <FontAwesomeIcon
                   icon={faCheck}
                   className="text-[#FFC61A] text-xl font-bold mr-4"
                 />
                 <span className="text-[#737373]  font-semibold text-lg">
-                Fixed price
+                  Fixed price
                 </span>
               </p>
 
@@ -532,7 +655,7 @@ export default function Home() {
                   className="text-[#FFC61A] text-xl font-bold mr-4"
                 />
                 <span className="text-[#737373]  font-semibold text-lg">
-                Good application
+                  Good application
                 </span>
               </p>
 
@@ -542,14 +665,14 @@ export default function Home() {
                   className="text-[#FFC61A] text-xl font-bold mr-4"
                 />
                 <span className="text-[#737373]  font-semibold text-lg">
-                Stable orders
+                  Stable orders
                 </span>
               </p>
             </div>
           </div>
         </div>
       </div>
+
     </>
   );
 }
-

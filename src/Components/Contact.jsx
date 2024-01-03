@@ -104,7 +104,7 @@ export default function Contact() {
               </div>
 
               <div className="border-t border-[#ADADAD] w-100 h-1 mt-2" />
-              <p className="mt-3">info@abc.com</p>
+              <p className="mt-3">abc@taxi.com</p>
             </div>
 
             <div className="mt-5">
@@ -118,15 +118,15 @@ export default function Contact() {
               </div>
 
               <div className="border-t border-[#ADADAD] w-100 h-1 mt-2" />
-              <p className="mt-3">Main Road Vijay Nager Indore</p>
+              <p className="mt-3">xyz</p>
             </div>
           </div>
           <div className="md:col-span-2"></div>
 
-          <div className="md:col-span-5 p-5 bg-white shadow-md ">
+          <div className="md:col-span-5 p-5 bg-white shadow-md rounded border-2 border-gray-200">
             <form onClick={handleSubmit}>
               <div className="mb-5">
-                <h2 className="text-3xl font-bold text-center ">
+                <h2 className="text-2xl font-bold text-center ">
                   Send Message
                 </h2>
               </div>

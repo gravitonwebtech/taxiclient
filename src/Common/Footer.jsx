@@ -12,6 +12,7 @@ import {
   faInstagram,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
+import Logo from "../Common/Images/Logo.jpeg";
 import "./style.css";
 
 export default function Footer() {
@@ -24,10 +25,11 @@ export default function Footer() {
   } else {
     return (
       <>
-        <div className="footer-part p-12 bg-black mt-10">
+        <div className="footer-part p-12 bg-black mt-5">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 mx-0 md:mx-12 lg:mx-14">
             <div>
-              <h4 className="text-[#f0bb3a] text-3xl font-bold">Taxi</h4>
+              {/* <h4 className="text-[#f0bb3a] text-3xl font-bold">Taxi</h4> */}
+              <img src={Logo} className="w-[60px] h-auto"></img>
 
               <h5 className="mt-3 text-white text-lg">
                 <Link to="/About">About Us</Link>
