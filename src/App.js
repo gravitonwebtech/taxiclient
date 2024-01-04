@@ -7,6 +7,7 @@ import Services from "./Components/Services";
 import Footer from "./Common/Footer";
 import Location from "./Components/Location";
 import Login from "./Components/Login";
+import Booking from "./Components/Booking";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/services"  element={<Services/>}  />
         <Route path="/location"  element={<Location />} /> 
         <Route path="/login"  element={<Login />} /> 
+        <Route path="/booking"  element={<Booking/>} /> 
       </Routes>
       <Footer />
     </>

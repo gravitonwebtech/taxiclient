@@ -18,73 +18,45 @@ function Login({ onClose }) {
 
   const [isLogin, setIsLogin] = useState(true);
 
-  const [loginErrors, setLoginErrors] = useState({});
-  const [registrationErrors, setRegistrationErrors] = useState({});
-
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLoginFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  
-    // Clear the corresponding error when the user starts typing
-    if (loginErrors[name]) {
-      setLoginErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: "",
-      }));
-    }
   };
-  
+
   const handleRegistrationChange = (e) => {
     const { name, value } = e.target;
     setRegistrationFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  
-    // Clear the corresponding error when the user starts typing
-    if (registrationErrors[name]) {
-      setRegistrationErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: "",
-      }));
-    }
   };
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    const errors = validateLogin();
-    if (Object.keys(errors).length === 0) {
-      // Implement login logic here using loginFormData
-      console.log("Login clicked", loginFormData);
-      setLoginFormData({
-        email: "",
-        password: "",
-      });
-    } else {
-      setLoginErrors(errors);
-    }
+    // Implement login logic here using loginFormData
+    console.log("Login clicked", loginFormData);
+    setLoginFormData({
+      email: "",
+      password: "",
+    });
   };
 
   const handleRegistrationSubmit = (e) => {
     e.preventDefault();
-    const errors = validateRegistration();
-    if (Object.keys(errors).length === 0) {
-      // Implement registration logic here using registrationFormData
-      console.log("Registration clicked", registrationFormData);
-      setRegistrationFormData({
-        fullName: "",
-        email: "",
-        password: "",
-        rePassword: "",
-        phoneNumber: "",
-      });
-    } else {
-      setRegistrationErrors(errors);
-    }
+    // Implement registration logic here using registrationFormData
+    console.log("Registration clicked", registrationFormData);
+    setRegistrationFormData({
+      fullName: "",
+      email: "",
+      password: "",
+      rePassword: "",
+      phoneNumber: "",
+    });
   };
+
 
   const handleClose = () => {
     onClose();
@@ -97,38 +69,6 @@ function Login({ onClose }) {
 
   const showRegistration = () => {
     setIsLogin(false);
-  };
-
-  const validateLogin = () => {
-    const errors = {};
-    if (!loginFormData.email) {
-      errors.email = "Email is required";
-    }
-    if (!loginFormData.password) {
-      errors.password = "Password is required";
-    }
-    return errors;
-  };
-
-  const validateRegistration = () => {
-    const errors = {};
-    if (!registrationFormData.fullName) {
-      errors.fullName = "Fullname is required";
-    }
-    if (!registrationFormData.phoneNumber) {
-      errors.phoneNumber = "Phone Number is required";
-    }
-    if (!registrationFormData.email) {
-      errors.email = "Email is required";
-    }
-    if (!registrationFormData.password) {
-      errors.password = "Password is required";
-    } else if (
-      registrationFormData.password !== registrationFormData.rePassword
-    ) {
-      errors.rePassword = "Passwords do not match";
-    }
-    return errors;
   };
 
   return (
@@ -147,9 +87,7 @@ function Login({ onClose }) {
               <FontAwesomeIcon icon={faTimes} />
             </button>
           </div>
-          <form
-            onSubmit={isLogin ? handleLoginSubmit : handleRegistrationSubmit}
-          >
+          <form onSubmit={isLogin ? handleLoginSubmit : handleRegistrationSubmit}>
             {isLogin ? (
               <div>
                 <p>
@@ -158,14 +96,9 @@ function Login({ onClose }) {
                     name="email"
                     value={loginFormData.email}
                     onChange={handleLoginChange}
-                    className={`border border-gray-300 w-full px-3 py-2 mb-2 rounded ${
-                      loginErrors.email ? "border-red-500" : ""
-                    }`}
+                    className="border border-gray-300 w-full px-3 py-2 mb-5 rounded"
                     placeholder="Enter Email"
                   />
-                  {loginErrors.email && (
-                    <span className="text-red-500">{loginErrors.email}</span>
-                  )}
                 </p>
 
                 <p>
@@ -174,14 +107,9 @@ function Login({ onClose }) {
                     name="password"
                     value={loginFormData.password}
                     onChange={handleLoginChange}
-                    className={`border border-gray-300 w-full px-3 py-2 mb-2 mt-4 rounded ${
-                      loginErrors.password ? "border-red-500" : ""
-                    }`}
+                    className="border border-gray-300 w-full px-3 py-2 rounded"
                     placeholder="Enter Password"
                   />
-                  {loginErrors.password && (
-                    <span className="text-red-500">{loginErrors.password}</span>
-                  )}
                 </p>
 
                 <div className="mt-4 flex justify-end cursor-pointer">
@@ -213,15 +141,8 @@ function Login({ onClose }) {
                     value={registrationFormData.fullName}
                     onChange={handleRegistrationChange}
                     placeholder="Fullname"
-                    className={`border border-gray-300 w-full px-3 py-2 mb-2 rounded ${
-                      registrationErrors.fullName ? "border-red-500" : ""
-                    }`}
+                    className="border border-gray-300 w-full px-3 py-2 mb-4 rounded"
                   />
-                  {registrationErrors.fullName && (
-                    <span className="text-red-500">
-                      {registrationErrors.fullName}
-                    </span>
-                  )}
                 </p>
 
                 <p>
@@ -231,15 +152,8 @@ function Login({ onClose }) {
                     value={registrationFormData.phoneNumber}
                     onChange={handleRegistrationChange}
                     placeholder="Phone Number"
-                    className={`border border-gray-300 w-full px-3 py-2 mb-2 mt-4 rounded ${
-                      registrationErrors.phoneNumber ? "border-red-500" : ""
-                    }`}
+                    className="border border-gray-300 w-full px-3 py-2 mb-4 rounded"
                   />
-                  {registrationErrors.phoneNumber && (
-                    <span className="text-red-500">
-                      {registrationErrors.phoneNumber}
-                    </span>
-                  )}
                 </p>
                 <p>
                   <input
@@ -248,15 +162,8 @@ function Login({ onClose }) {
                     value={registrationFormData.email}
                     onChange={handleRegistrationChange}
                     placeholder="Enter Email"
-                    className={`border border-gray-300 w-full px-3 py-2 mb-2 mt-4 rounded ${
-                      registrationErrors.email ? "border-red-500" : ""
-                    }`}
+                    className="border border-gray-300 w-full px-3 py-2 mb-4 rounded"
                   />
-                  {registrationErrors.email && (
-                    <span className="text-red-500">
-                      {registrationErrors.email}
-                    </span>
-                  )}
                 </p>
 
                 <p>
@@ -266,15 +173,8 @@ function Login({ onClose }) {
                     value={registrationFormData.password}
                     onChange={handleRegistrationChange}
                     placeholder="Enter Password"
-                    className={`border border-gray-300 w-full px-3 py-2 mb-2 mt-4 rounded ${
-                      registrationErrors.password ? "border-red-500" : ""
-                    }`}
+                    className="border border-gray-300 w-full px-3 py-2 mb-4 rounded"
                   />
-                  {registrationErrors.password && (
-                    <span className="text-red-500">
-                      {registrationErrors.password}
-                    </span>
-                  )}
                 </p>
 
                 <p>
@@ -284,15 +184,8 @@ function Login({ onClose }) {
                     value={registrationFormData.rePassword}
                     onChange={handleRegistrationChange}
                     placeholder="Re-enter Password"
-                    className={`border border-gray-300 w-full px-3 py-2 mb-2 mt-4 rounded ${
-                      registrationErrors.rePassword ? "border-red-500" : ""
-                    }`}
+                    className="border border-gray-300 w-full px-3 py-2 rounded"
                   />
-                  {registrationErrors.rePassword && (
-                    <span className="text-red-500">
-                      {registrationErrors.rePassword}
-                    </span>
-                  )}
                 </p>
 
                 <div className="mt-5 flex justify-end">

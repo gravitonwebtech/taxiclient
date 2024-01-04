@@ -34,11 +34,18 @@ export default function Services() {
       <div className="mt-10 md:mt-20 text-center">
         <span className="text-[#FFC61A] font-bold text-xl"> WELCOME</span>
         <h1 className=" font-bold text-2xl md:text-4xl mt-4">Our Services</h1>
-        <p className="mt-4 text-[#737373]">
+        <p className="mt-4 text-[#737373] hidden md:block">
           Nulla egestas ante sit amet tincidunt bibendum. Duis id aliquet
           tellus, ut iaculis orci. Suspendisse efficitur <br></br> ornare neque,
           rhoncus viverra dui semper in. Ut nec gravida enim. Maecenas viverra
           elit id nulla euismod<br></br> tempus. Proin hendrerit nibh mauris,
+          eget mollis ex elementum vel. Sed facilisis scelerisque viverra.
+        </p>
+        <p className="mt-4 text-[#737373] block md:hidden mx-5 md:mx-0">
+          Nulla egestas ante sit amet tincidunt bibendum. Duis id aliquet
+          tellus, ut iaculis orci. Suspendisse efficitur ornare neque,
+          rhoncus viverra dui semper in. Ut nec gravida enim. Maecenas viverra
+          elit id nulla euismod tempus. Proin hendrerit nibh mauris,
           eget mollis ex elementum vel. Sed facilisis scelerisque viverra.
         </p>
       </div>

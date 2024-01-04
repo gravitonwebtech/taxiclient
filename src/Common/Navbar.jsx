@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "../Common/Images/Logo.jpeg";
 import Login from "../Components/Login";
+import Booking from "../Components/Booking";
 
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -29,16 +30,22 @@ const Navbar = () => {
     };
   }, []);
 
+  // Scroll to the top when the route changes
   useEffect(() => {
-    // Scroll to the top when the route changes
-
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  // login Popup
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
-
   const openLoginForm = () => {
     setIsLoginFormVisible(true);
+    setIsDrawerOpen(false);
+  };
+
+  // booking Popup
+  const [isBookingModalVisible, setIsBookingModalVisible] = useState(false);
+  const openBookingModal = () => {
+    setIsBookingModalVisible(true);
     setIsDrawerOpen(false);
   };
 
@@ -263,6 +270,15 @@ const Navbar = () => {
                     Login
                   </button>
                 </li>
+
+                <li>
+                  <button
+                    onClick={() => openBookingModal()}
+                    className="hover:text-blue-500"
+                  >
+                    Booking
+                  </button>
+                </li>
               </ul>
             </div>
           )}
@@ -406,6 +422,25 @@ const Navbar = () => {
                 Login
               </button>
             </li>
+
+            {/* <li>
+              <Link
+                to="/booking"
+                className="bg-[#FFC61A] px-4 py-2 text-white rounded"
+                onClick={() => closeDropdowns()}
+              >
+                Booking
+              </Link>
+            </li> */}
+
+            <li>
+              <button
+                onClick={() => openBookingModal()}
+                className="hover:text-blue-500"
+              >
+                Booking
+              </button>
+            </li>
           </ul>
         </div>
       </nav>
@@ -413,6 +448,11 @@ const Navbar = () => {
       {/* Login Popup */}
       {isLoginFormVisible && (
         <Login onClose={() => setIsLoginFormVisible(false)} />
+      )}
+
+      {/* Booking Modal */}
+      {isBookingModalVisible && (
+        <Booking onClose={() => setIsBookingModalVisible(false)} />
       )}
     </>
   );
