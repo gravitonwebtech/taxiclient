@@ -36,17 +36,17 @@ export default function Home() {
   }, [images.length]);
 
   const [formData, setFormData] = useState({
-    fromaddress: "",
-    toaddress: "",
-    phone: "",
-    datetime: "",
+    fromaddress: '',
+    toaddress: '',
+    phone: '',
+    datetime: '',
   });
 
   const [formErrors, setFormErrors] = useState({
-    fromaddress: "",
-    toaddress: "",
-    phone: "",
-    datetime: "",
+    fromaddress: '',
+    toaddress: '',
+    phone: '',
+    datetime: '',
   });
 
   const handleInputChange = (e) => {
@@ -58,7 +58,7 @@ export default function Home() {
 
     setFormErrors({
       ...formErrors,
-      [name]: "",
+      [name]: '',
     });
   };
 
@@ -67,17 +67,17 @@ export default function Home() {
 
     // Validate form fields
     const newErrors = {};
-    if (!formData.fromaddress) {
-      newErrors.fromaddress = "Please enter address";
+    if (!formData.fromaddress.trim()) {
+      newErrors.fromaddress = 'Please enter address';
     }
-    if (!formData.toaddress) {
-      newErrors.toaddress = "Please fill address";
+    if (!formData.toaddress.trim()) {
+      newErrors.toaddress = 'Please fill address';
     }
-    if (!formData.phone) {
-      newErrors.phone = "Please fill phone number";
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Please fill phone number';
     }
-    if (!formData.datetime) {
-      newErrors.datetime = "Please fill date time";
+    if (!formData.datetime.trim()) {
+      newErrors.datetime = 'Please fill date time';
     }
 
     // Update errors or submit the form
@@ -85,22 +85,22 @@ export default function Home() {
       setFormErrors(newErrors);
     } else {
       // Simulate form submission logic
-      console.log("Form submitted:", formData);
+      console.log('Form submitted:', formData);
 
       // Optionally, you can reset the form fields after submission
       setFormData({
-        fromaddress: "",
-        toaddress: "",
-        phone: "",
-        datetime: "",
+        fromaddress: '',
+        toaddress: '',
+        phone: '',
+        datetime: '',
       });
 
       // Clear all errors after successful submission
       setFormErrors({
-        fromaddress: "",
-        toaddress: "",
-        phone: "",
-        datetime: "",
+        fromaddress: '',
+        toaddress: '',
+        phone: '',
+        datetime: '',
       });
     }
   };
@@ -332,17 +332,11 @@ export default function Home() {
                 </p>
               </div>
 
-              {formErrors.general && (
-                <div className="text-red-500 text-center mt-2">
-                  {formErrors.general}
-                </div>
-              )}
-
               <div className="flex justify-center mt-5 md:mt-10">
                 <button
                   type="submit"
                   className="px-5 py-2 text-black font-bold border-2 border-gray-100 
-        text-lg rounded-[30px] bg-[#FFC61A]"
+                  text-lg rounded-[30px] bg-[#FFC61A]"
                 >
                   GET TAXI
                 </button>
@@ -481,7 +475,7 @@ export default function Home() {
             Standard sedan for a drive around the city at your service.
           </p>
           <div class="text-3xl font-bold text-center mt-4">
-          &#x20B9;4<span className="text-xl font-bold"> /km </span>
+            &#x20B9;4<span className="text-xl font-bold"> /km </span>
           </div>
         </div>
 
@@ -496,7 +490,7 @@ export default function Home() {
             Standard sedan for a drive around the city at your service.
           </p>
           <div class="text-3xl font-bold text-center mt-4">
-          &#x20B9;3.5<span className="text-xl font-bold"> /km </span>
+            &#x20B9;3.5<span className="text-xl font-bold"> /km </span>
           </div>
         </div>
 
@@ -509,7 +503,7 @@ export default function Home() {
             Standard sedan for a drive around the city at your service.
           </p>
           <div class="text-3xl font-bold text-center mt-4">
-          &#x20B9;7<span className="text-xl font-bold"> /km </span>
+            &#x20B9;7<span className="text-xl font-bold"> /km </span>
           </div>
         </div>
 
@@ -522,7 +516,7 @@ export default function Home() {
             Standard sedan for a drive around the city at your service.
           </p>
           <div class="text-3xl font-bold text-center mt-4">
-          &#x20B9;5.6<span className="text-xl font-bold"> /km </span>
+            &#x20B9;5.6<span className="text-xl font-bold"> /km </span>
           </div>
         </div>
       </div>
@@ -672,7 +666,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
     </>
   );
 }
