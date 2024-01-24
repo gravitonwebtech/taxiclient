@@ -36,71 +36,101 @@ export default function Home() {
   }, [images.length]);
 
   const [formData, setFormData] = useState({
-    fromaddress: '',
-    toaddress: '',
-    phone: '',
-    datetime: '',
+    fromaddress: "",
+    toaddress: "",
+    date: "",
+    time: "",
+    phone: "",
   });
 
-  const [formErrors, setFormErrors] = useState({
-    fromaddress: '',
-    toaddress: '',
-    phone: '',
-    datetime: '',
+  const [errors, setErrors] = useState({
+    fromaddress: "",
+    toaddress: "",
+    date: "",
+    time: "",
+    phone: "",
   });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [e.target.name]: e.target.value,
     });
 
-    setFormErrors({
-      ...formErrors,
-      [name]: '',
+    setErrors({
+      ...errors,
+      [e.target.name]: "",
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate form fields
-    const newErrors = {};
+    let isFormValid = true;
+
+    // Validation for From Address
     if (!formData.fromaddress.trim()) {
-      newErrors.fromaddress = 'Please enter address';
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        fromaddress: "From Address is required.",
+      }));
+      isFormValid = false;
     }
+
+    // Validation for To Address
     if (!formData.toaddress.trim()) {
-      newErrors.toaddress = 'Please fill address';
-    }
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Please fill phone number';
-    }
-    if (!formData.datetime.trim()) {
-      newErrors.datetime = 'Please fill date time';
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        toaddress: "To Address is required.",
+      }));
+      isFormValid = false;
     }
 
-    // Update errors or submit the form
-    if (Object.keys(newErrors).length > 0) {
-      setFormErrors(newErrors);
-    } else {
-      // Simulate form submission logic
-      console.log('Form submitted:', formData);
+    // Validation for Date
+    if (!formData.date) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        date: "Date is required.",
+      }));
+      isFormValid = false;
+    }
 
-      // Optionally, you can reset the form fields after submission
+    // Validation for Time
+    if (!formData.time) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        time: "Time is required.",
+      }));
+      isFormValid = false;
+    }
+
+    // Validation for Phone Number
+
+    if (!formData.phone.trim() || !/^\d{10}$/.test(formData.phone.trim())) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        phone: "Please enter a valid 10-digit number.",
+      }));
+      isFormValid = false;
+    }
+
+    if (isFormValid) {
+      console.log("Form Data:", formData);
+
       setFormData({
-        fromaddress: '',
-        toaddress: '',
-        phone: '',
-        datetime: '',
+        fromaddress: "",
+        toaddress: "",
+        date: "",
+        time: "",
+        phone: "",
       });
 
-      // Clear all errors after successful submission
-      setFormErrors({
-        fromaddress: '',
-        toaddress: '',
-        phone: '',
-        datetime: '',
+      setErrors({
+        fromaddress: "",
+        toaddress: "",
+        date: "",
+        time: "",
+        phone: "",
       });
     }
   };
@@ -239,31 +269,41 @@ export default function Home() {
 
       {/* banner */}
       <div className="home-banner-section mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-14 md:pt-32 px-5 md:px-10 xl:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 md:pt-20 px-5 md:px-10 xl:px-20">
           <div className="bg-white shadow rounded p-5 md:p-8 md:w-[600px]">
             <form onSubmit={handleSubmit}>
               <h1 className="text-center text-xl md:text-2xl font-bold">
                 GET TAXI
                 <span className="text-[#FFC61A]"> ONLINE</span>
               </h1>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-5">
-                <div className="bg-[#FFC61A] flex justify-center p-5 rounded">
+              <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-5">
+                <div className="bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
                   <img src={Car1}></img>
+                  <h1 className="text-sm font-semibold text-center mt-2">
+                    Mini
+                  </h1>
                 </div>
 
-                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
+                <div className="hover:bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
                   <img src={Car2}></img>
+                  <h1 className="text-sm font-semibold text-center mt-2">
+                    Syden
+                  </h1>
                 </div>
 
-                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
+                {/* <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
                   <img src={Car3}></img>
-                </div>
+                </div> */}
 
-                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
+                <div className="hover:bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
                   <img src={Car4}></img>
+                  <h1 className="text-sm font-semibold text-center mt-2">
+                    SUV
+                  </h1>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 mt-5 md:mt-10">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 md:mt-10">
                 <p>
                   <input
                     type="text"
@@ -272,13 +312,11 @@ export default function Home() {
                     placeholder="From Address..."
                     value={formData.fromaddress}
                     onChange={handleInputChange}
-                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
-                      formErrors.fromaddress && "border-red-500"
-                    }`}
+                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
                   />
-                  {formErrors.fromaddress && (
-                    <span className="text-red-500">
-                      {formErrors.fromaddress}
+                  {errors.fromaddress && (
+                    <span className="text-red-500 text-sm">
+                      {errors.fromaddress}
                     </span>
                   )}
                 </p>
@@ -290,48 +328,66 @@ export default function Home() {
                     placeholder="To Address...."
                     value={formData.toaddress}
                     onChange={handleInputChange}
-                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
-                      formErrors.toaddress && "border-red-500"
-                    }`}
+                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
                   />
-                  {formErrors.toaddress && (
-                    <span className="text-red-500">{formErrors.toaddress}</span>
+                  {errors.toaddress && (
+                    <span className="text-red-500 text-sm">
+                      {errors.toaddress}
+                    </span>
                   )}
                 </p>
                 <p>
                   <input
-                    type="text"
+                    type="date"
+                    id="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleInputChange}
+                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
+                  />
+                  {errors.date && (
+                    <span className="text-red-500 text-sm">{errors.date}</span>
+                  )}
+                </p>
+                <p>
+                  <input
+                    type="time"
+                    id="time"
+                    name="time"
+                    value={formData.time}
+                    onChange={handleInputChange}
+                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
+                  />
+                  {errors.time && (
+                    <span className="text-red-500 text-sm">{errors.time}</span>
+                  )}
+                </p>
+
+                <p>
+                  <input
+                    type="tel"
                     id="phone"
                     name="phone"
                     placeholder="Phone Number"
                     value={formData.phone}
-                    onChange={handleInputChange}
-                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
-                      formErrors.phone && "border-red-500"
-                    }`}
+                    onChange={(e) => {
+                      const numericValue = e.target.value.replace(
+                        /[^0-9]/g,
+                        ""
+                      );
+                      setFormData({
+                        ...formData,
+                        phone: numericValue,
+                      });
+                    }}
+                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
+                    maxLength="10"
                   />
-                  {formErrors.phone && (
-                    <span className="text-red-500">{formErrors.phone}</span>
-                  )}
-                </p>
-                <p>
-                  <input
-                    type="text"
-                    id="datetime"
-                    name="datetime"
-                    placeholder="Date and Time"
-                    value={formData.datetime}
-                    onChange={handleInputChange}
-                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
-                      formErrors.datetime && "border-red-500"
-                    }`}
-                  />
-                  {formErrors.datetime && (
-                    <span className="text-red-500">{formErrors.datetime}</span>
+                  {errors.phone && (
+                    <span className="text-red-500 text-sm">{errors.phone}</span>
                   )}
                 </p>
               </div>
-
               <div className="flex justify-center mt-5 md:mt-10">
                 <button
                   type="submit"
