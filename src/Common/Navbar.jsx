@@ -49,6 +49,13 @@ const Navbar = () => {
     setIsDrawerOpen(false);
   };
 
+  const LogoutHandle = () => {
+    localStorage.removeItem("login");
+    localStorage.removeItem("userData");
+
+    navigate("/");
+  };
+
   return (
     <>
       <nav
@@ -261,15 +268,25 @@ const Navbar = () => {
                     Login
                   </Link>
                 </li> */}
+                {localStorage.getItem("userData") === null ? (
+                  <li>
+                    <button
+                      onClick={() => openLoginForm()}
+                      className="hover:text-blue-500"
+                    >
+                      Login
+                    </button>
+                  </li>
+                ) : null}
 
-                <li>
-                  <button
-                    onClick={() => openLoginForm()}
-                    className="hover:text-blue-500"
-                  >
-                    Login
-                  </button>
-                </li>
+                {localStorage.getItem("userData") !== null &&
+                localStorage.getItem("userData") !== "" ? (
+                  <li>
+                    <Link to="/allBooking" className="hover:text-blue-500">
+                      My Booking
+                    </Link>
+                  </li>
+                ) : null}
 
                 <li>
                   <button
@@ -279,6 +296,18 @@ const Navbar = () => {
                     Booking Now
                   </button>
                 </li>
+
+                {localStorage.getItem("userData") !== null &&
+                localStorage.getItem("userData") !== "" ? (
+                  <li>
+                    <button
+                      onClick={() => LogoutHandle()}
+                      className="hover:text-blue-500"
+                    >
+                      LogOut
+                    </button>
+                  </li>
+                ) : null}
               </ul>
             </div>
           )}
@@ -413,16 +442,26 @@ const Navbar = () => {
                 Login
               </Link>
             </li> */}
+            {console.log(localStorage.getItem("userData"))}
+            {localStorage.getItem("userData") === null ? (
+              <li>
+                <button
+                  onClick={() => openLoginForm()}
+                  className="hover:text-blue-500"
+                >
+                  Login
+                </button>
+              </li>
+            ) : null}
 
-            <li>
-              <button
-                onClick={() => openLoginForm()}
-                className="hover:text-blue-500"
-              >
-                Login
-              </button>
-            </li>
-
+            {localStorage.getItem("userData") !== null &&
+            localStorage.getItem("userData") !== "" ? (
+              <li>
+                <Link to="/allBooking" className="hover:text-blue-500">
+                  My Booking
+                </Link>
+              </li>
+            ) : null}
             {/* <li>
               <Link
                 to="/booking"
@@ -441,6 +480,18 @@ const Navbar = () => {
                 Booking Now
               </button>
             </li>
+
+            {localStorage.getItem("userData") !== null &&
+            localStorage.getItem("userData") !== "" ? (
+              <li>
+                <button
+                  onClick={() => LogoutHandle()}
+                  className="hover:text-blue-500"
+                >
+                  LogOut
+                </button>
+              </li>
+            ) : null}
           </ul>
         </div>
       </nav>

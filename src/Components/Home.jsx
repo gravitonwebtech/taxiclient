@@ -22,6 +22,7 @@ import {
   faTruck,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Home.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const images = [sliderimage1, sliderimage2];
@@ -64,8 +65,9 @@ export default function Home() {
       [e.target.name]: "",
     });
   };
-
-  const handleSubmit = (e) => {
+const navigate = useNavigate()
+const userData=localStorage.getItem('userData')
+  const handleSubmit = (e) => { 
     e.preventDefault();
 
     let isFormValid = true;
@@ -126,7 +128,33 @@ export default function Home() {
     }
 
     if (isFormValid) {
-      console.log("Form Data:", formData);
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
+      
+      var raw = JSON.stringify({
+        "fromaddress": formData.fromaddress,
+        "toaddress": formData.toaddress,
+        "date": formData.date,
+        "time": formData.time,
+        "phone": formData.phone,
+        "name":formData.name,
+        "username": userData
+      });
+      
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      
+      fetch("http://127.0.0.1:8000/api/get_taxi/", requestOptions)
+        .then(response => response.text())
+        .then(result => {console.log(result)
+        navigate('/currentData')
+        })
+        .catch(error => console.log('error', error));
 
       setFormData({
         fromaddress: "",
@@ -561,7 +589,7 @@ export default function Home() {
               <div className="flex justify-center mt-5">
                 <button
                   type="submit"
-                  className="px-5 py-2 text-black font-bold border-2 border-[#FFC61A]
+                  className="px-5 py-2  font-bold border-2 border-[#FFC61A]
                   text-lg rounded-[30px] bg-[#FFC61A] text-white"
                 >
                   GET TAXI

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 function Login({ onClose }) {
   const [loginFormData, setLoginFormData] = useState({
@@ -52,28 +53,106 @@ function Login({ onClose }) {
       }));
     }
   };
+const navigate=useNavigate()
+const handleLoginSubmit = async (e) => {
+  e.preventDefault();
+  const errors = validateLogin();
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    const errors = validateLogin();
-    if (Object.keys(errors).length === 0) {
-      // Implement login logic here using loginFormData
-      console.log("Login clicked", loginFormData);
-      setLoginFormData({
-        email: "",
-        password: "",
+  if (Object.keys(errors).length === 0) {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
+
+      const raw = JSON.stringify({
+        username: loginFormData.email,
+        password: loginFormData.password,
       });
-    } else {
-      setLoginErrors(errors);
+
+      const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow',
+      };
+
+      const response = await fetch("http://127.0.0.1:8000/api/login/", requestOptions);
+
+      if (response.ok) {
+        // Credentials are correct
+        const result = await response.text();
+        localStorage.setItem("userData", loginFormData.email);
+        navigate('/allBooking');
+        console.log(result);
+        onClose();
+        
+        setLoginFormData({
+          email: "",
+          password: "",
+        });
+      } else {
+        // Credentials are incorrect
+        console.error('Incorrect credentials');
+        alert('Wrong Id And Password')
+
+        // You may want to update state or display an error message
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle other errors, like network issues, server errors, etc.
     }
-  };
+  } else {
+    setLoginErrors(errors);
+  }
+};
+
+
+
+
+
+  const [username, setUserName] = useState("");
 
   const handleRegistrationSubmit = (e) => {
     e.preventDefault();
     const errors = validateRegistration();
     if (Object.keys(errors).length === 0) {
-      // Implement registration logic here using registrationFormData
-      console.log("Registration clicked", registrationFormData);
+      setUserName(Math.floor(100000 + Math.random() * 900000))
+  
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
+  
+      var raw = JSON.stringify({
+        "username": username,
+        "password": registrationFormData.password,
+        "fullname": registrationFormData.fullName,
+        "email": registrationFormData.email,
+        "phone_number": registrationFormData.phoneNumber,
+        "address": registrationFormData.rePassword
+      });
+  
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+  
+      fetch("http://127.0.0.1:8000/api/register/", requestOptions)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('User registration failed');
+          }
+          return response.json();
+        })
+        .then(result => {
+          alert('Form Submitted');
+        })
+        .catch(error => {
+          console.error('Error during registration:', error);
+          alert('User registration failed. Email is already registered.');
+        });
+  
       setRegistrationFormData({
         fullName: "",
         email: "",
@@ -85,6 +164,7 @@ function Login({ onClose }) {
       setRegistrationErrors(errors);
     }
   };
+  
 
   const handleClose = () => {
     onClose();
@@ -154,14 +234,14 @@ function Login({ onClose }) {
               <div>
                 <p>
                   <input
-                    type="email"
+                    type="text"
                     name="email"
                     value={loginFormData.email}
                     onChange={handleLoginChange}
                     className={`border border-gray-300 w-full px-3 py-2 mb-2 rounded ${
                       loginErrors.email ? "border-red-500" : ""
                     }`}
-                    placeholder="Enter Email"
+                    placeholder="Enter UserName"
                   />
                   {loginErrors.email && (
                     <span className="text-red-500">{loginErrors.email}</span>

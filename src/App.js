@@ -8,6 +8,8 @@ import Footer from "./Common/Footer";
 import Location from "./Components/Location";
 import Login from "./Components/Login";
 import Booking from "./Components/Booking";
+import TaxiDataModal from "./Components/TaxiDataModal";
+import MyBooking from "./Components/MyBooking";
 
 
 function App() {
@@ -22,6 +24,10 @@ function App() {
         <Route path="/location"  element={<Location />} /> 
         <Route path="/login"  element={<Login />} /> 
         <Route path="/booking"  element={<Booking/>} /> 
+        <Route path="/currentData"  element={<TaxiDataModal/>} /> 
+        <Route path="/allBooking"  element={<MyBooking/>} /> 
+
+
       </Routes>
       <Footer />
     </>
