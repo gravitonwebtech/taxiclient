@@ -41,6 +41,7 @@ export default function Home() {
     date: "",
     time: "",
     phone: "",
+    name: "",
   });
 
   const [errors, setErrors] = useState({
@@ -49,6 +50,7 @@ export default function Home() {
     date: "",
     time: "",
     phone: "",
+    name: "",
   });
 
   const handleInputChange = (e) => {
@@ -114,6 +116,15 @@ export default function Home() {
       isFormValid = false;
     }
 
+    // Validation for Name
+    if (!formData.name.trim()) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        name: "Name is required.",
+      }));
+      isFormValid = false;
+    }
+
     if (isFormValid) {
       console.log("Form Data:", formData);
 
@@ -123,6 +134,7 @@ export default function Home() {
         date: "",
         time: "",
         phone: "",
+        name: "",
       });
 
       setErrors({
@@ -131,6 +143,7 @@ export default function Home() {
         date: "",
         time: "",
         phone: "",
+        name: "",
       });
     }
   };
@@ -268,7 +281,7 @@ export default function Home() {
       </div> */}
 
       {/* banner */}
-      <div className="home-banner-section mt-16">
+      {/* <div className="home-banner-section mt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 md:pt-20 px-5 md:px-10 xl:px-20">
           <div className="bg-white shadow rounded p-5 md:p-8 md:w-[600px]">
             <form onSubmit={handleSubmit}>
@@ -291,9 +304,9 @@ export default function Home() {
                   </h1>
                 </div>
 
-                {/* <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
+                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
                   <img src={Car3}></img>
-                </div> */}
+                </div>
 
                 <div className="hover:bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
                   <img src={Car4}></img>
@@ -393,6 +406,163 @@ export default function Home() {
                   type="submit"
                   className="px-5 py-2 text-black font-bold border-2 border-gray-100 
                   text-lg rounded-[30px] bg-[#FFC61A]"
+                >
+                  GET TAXI
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div> */}
+
+      <div className="home-banner-section mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 md:pt-20 px-5 md:px-10 xl:px-20">
+          <div className="bg-white bg-opacity-10 shadow rounded p-5 md:p-8 md:w-[600px]">
+            <form onSubmit={handleSubmit}>
+              <h1 className="text-xl md:text-2xl font-bold text-white">
+                Book Your Taxi
+                <span className="text-[#FFC61A]"> ONLINE</span>
+              </h1>
+              <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-5">
+                <div className="bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
+                  <img src={Car1}></img>
+                  <h1 className="text-sm font-semibold text-center text-white mt-2">
+                    Mini
+                  </h1>
+                </div>
+
+                <div className="hover:bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
+                  <img src={Car2}></img>
+                  <h1 className="text-sm font-semibold text-center text-white mt-2">
+                    Syden
+                  </h1>
+                </div>
+
+                {/* <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
+                  <img src={Car3}></img>
+                </div> */}
+
+                <div className="hover:bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
+                  <img src={Car4}></img>
+                  <h1 className="text-sm font-semibold text-center text-white mt-2">
+                    SUV
+                  </h1>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 md:mt-10">
+                <p>
+                  <input
+                    type="text"
+                    id="fromaddress"
+                    name="fromaddress"
+                    placeholder="From Address"
+                    value={formData.fromaddress}
+                    onChange={handleInputChange}
+                    class="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
+                  />
+
+                  {errors.fromaddress && (
+                    <span className="text-red-400 text-sm">
+                      {errors.fromaddress}
+                    </span>
+                  )}
+                </p>
+                <p>
+                  <input
+                    type="text"
+                    id="toaddress"
+                    name="toaddress"
+                    placeholder="To Address"
+                    value={formData.toaddress}
+                    onChange={handleInputChange}
+                    className="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
+                  />
+                  {errors.toaddress && (
+                    <span className="text-red-400 text-sm">
+                      {errors.toaddress}
+                    </span>
+                  )}
+                </p>
+                <p>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleInputChange}
+                    className="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
+                  />
+                  {errors.date && (
+                    <span className="text-red-400 text-sm">{errors.date}</span>
+                  )}
+                </p>
+                <p>
+                  <input
+                    type="time"
+                    id="time"
+                    name="time"
+                    value={formData.time}
+                    onChange={handleInputChange}
+                    className="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
+                  />
+                  {errors.time && (
+                    <span className="text-red-400 text-sm">{errors.time}</span>
+                  )}
+                </p>
+
+                <p>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Phone Number"
+                    value={formData.phone}
+                    onChange={(e) => {
+                      const numericValue = e.target.value.replace(
+                        /[^0-9]/g,
+                        ""
+                      );
+                      if (numericValue !== formData.phone) {
+                        setFormData({
+                          ...formData,
+                          phone: numericValue,
+                        });
+                        setErrors((prevErrors) => ({
+                          ...prevErrors,
+                          phone: "",
+                        }));
+                      }
+                    }}
+                    className="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
+                    maxLength="10"
+                  />
+                  {errors.phone && (
+                    <span className="text-red-400 text-sm">{errors.phone}</span>
+                  )}
+                </p>
+
+                <p>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
+                  />
+                  {errors.name && (
+                    <span className="text-red-400 text-sm">{errors.name}</span>
+                  )}
+                </p>
+              </div>
+
+              <div className="flex justify-center mt-5">
+                <button
+                  type="submit"
+                  className="px-5 py-2 text-black font-bold border-2 border-[#FFC61A]
+                  text-lg rounded-[30px] bg-[#FFC61A] text-white"
                 >
                   GET TAXI
                 </button>

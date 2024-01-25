@@ -1,4 +1,4 @@
-.home-banner-section {
+/* .home-banner-section {
     background-image: url("../Assests/Homepageimages/slider1.jpg");
     background-attachment: fixed;
     height: 100vh;
@@ -12,4 +12,47 @@
       height:auto;
       padding-bottom: 20px;
   }
+  } */
+
+
+  .home-banner-section {
+    position: relative;
+    background-image: url("../Assests/Homepageimages/slider1.jpg");
+    height: 100vh;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
+  
+  .home-banner-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+  }
+  
+  .home-banner-section .grid {
+    position: relative;
+    z-index: 2;
+  }
+  
+  @media (max-width: 768px){
+    .home-banner-section {
+      height:auto;
+      padding-bottom: 20px;
+  }
+  } 
+  
+#time::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+#date::-webkit-calendar-picker-indicator {
+  filter: invert(1); 
+  cursor: pointer;
+}

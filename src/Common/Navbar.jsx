@@ -242,7 +242,7 @@ const Navbar = () => {
                   </Link>
                 </li>
 
-                <li>
+                {/* <li>
                   <Link
                     to="/location"
                     className="hover:text-blue-500"
@@ -250,7 +250,7 @@ const Navbar = () => {
                   >
                     Location
                   </Link>
-                </li>
+                </li> */}
 
                 {/* <li>
                   <Link
@@ -276,7 +276,7 @@ const Navbar = () => {
                     onClick={() => openBookingModal()}
                     className="hover:text-blue-500"
                   >
-                    Booking
+                    Booking Now
                   </button>
                 </li>
               </ul>
@@ -394,7 +394,7 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <li>
+            {/* <li>
               <Link
                 to="/location"
                 className="hover:text-blue-500"
@@ -402,7 +402,7 @@ const Navbar = () => {
               >
                 Location
               </Link>
-            </li>
+            </li> */}
 
             {/* <li>
               <Link
@@ -438,7 +438,7 @@ const Navbar = () => {
                 onClick={() => openBookingModal()}
                 className="hover:text-blue-500"
               >
-                Booking
+                Booking Now
               </button>
             </li>
           </ul>
