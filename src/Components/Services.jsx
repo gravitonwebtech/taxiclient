@@ -162,7 +162,7 @@ export default function Services() {
       </div>
 
       <div className="grid grid-col-1 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10  xl:gap-20 mt-10 md:mt-20 mx-5 sm:mx-10 md:mx-20 lg:mx-28">
-        <div className="bg-white shadow-md  p-5">
+        <div className="bg-white shadow-md border rounded p-5">
           <div className="flex justify-center">
             <img src={Traffic1} alt="" />
           </div>
@@ -177,7 +177,7 @@ export default function Services() {
           </div>
         </div>
 
-        <div className="bg-white shadow-md p-5">
+        <div className="bg-white shadow-md border rounded p-5">
           <div className="flex justify-center">
             <img src={Traffic2} alt="" />
           </div>
@@ -192,7 +192,7 @@ export default function Services() {
           </div>
         </div>
 
-        <div className="bg-white shadow-md  p-5">
+        <div className="bg-white shadow-md border rounded p-5">
           <div className="flex justify-center">
             <img src={Traffic3} alt="" />
           </div>
@@ -205,7 +205,7 @@ export default function Services() {
           </div>
         </div>
 
-        <div className="bg-white shadow-md  p-5">
+        <div className="bg-white shadow-md border rounded p-5">
           <div className="flex justify-center">
             <img src={Traffic4} alt="" />
           </div>
