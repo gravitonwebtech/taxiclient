@@ -124,14 +124,14 @@ export default function Contact() {
           <div className="md:col-span-2"></div>
 
           <div className="md:col-span-5 p-5 bg-white shadow-md rounded border-2 border-gray-200">
-            <form onClick={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="mb-5">
                 <h2 className="text-2xl font-bold text-center ">
                   Send Message
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-3">
                 <input
                   type="text"
                   name="name"
@@ -140,7 +140,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                 />
-                {errors.name && <p className="text-red-500">{errors.name}</p>}
+                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
                 <input
                   type="email"
@@ -150,17 +150,27 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                 />
-                {errors.email && <p className="text-red-500">{errors.email}</p>}
+                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
-                <input
+                 <input
                   type="text"
                   name="phone"
                   placeholder="Enter Your Number"
                   className="py-2 w-full rounded font-semibold text-gray-500 border-2 border-gray-100 px-5"
                   value={formData.phone}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const numericValue = e.target.value.replace(
+                      /[^0-9]/g,
+                      ""
+                    );
+                    setFormData({
+                      ...formData,
+                      phone: numericValue,
+                    });
+                  }}
+                  maxLength="10"
                 />
-                {errors.phone && <p className="text-red-500">{errors.phone}</p>}
+                {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
 
                 <textarea
                   name="textarea"
@@ -171,7 +181,7 @@ export default function Contact() {
                   onChange={handleChange}
                 />
                 {errors.textarea && (
-                  <p className="text-red-500">{errors.textarea}</p>
+                  <p className="text-red-500 text-sm">{errors.textarea}</p>
                 )}
               </div>
 
