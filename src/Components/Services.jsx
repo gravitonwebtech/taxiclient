@@ -161,7 +161,7 @@ export default function Services() {
         <h1 className=" font-bold text-2xl md:text-4xl mt-3">TARIFFS</h1>
       </div>
 
-      <div className="grid grid-col-1 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10  xl:gap-20 mt-10 md:mt-20 mx-5 sm:mx-10 md:mx-20 lg:mx-28">
+      <div className="grid grid-col-1 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10  xl:gap-20 mt-10 md:mt-20 mx-5 sm:mx-10 md:mx-20 lg:mx-28  mb-14">
         <div className="bg-white shadow-md border rounded p-5">
           <div className="flex justify-center">
             <img src={Traffic1} alt="" />

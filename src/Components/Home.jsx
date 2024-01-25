@@ -811,14 +811,14 @@ export default function Home() {
       </div>
 
       {/* 5-part */}
-      <div className="mt-10 md:mt-20 mx-5 sm:mx-10 md:mx-20 lg:mx-28">
+      <div className="mt-10  md:mt-20 mx-5 sm:mx-10 md:mx-20 lg:mx-28">
         <span className="text-[#FFC61A] font-bold text-xl">FOR DRIVERS</span>
         <h1 className=" font-bold text-2xl md:text-4xl mt-3">
           DO YOU WANT TO EARN WITH US?
         </h1>
       </div>
 
-      <div className="grid grid-col-1 md:grid-cols-2 gap-5 md:gap-10 xl:gap-20 mt-5 mx-5 sm:mx-10 md:mx-20 lg:mx-28">
+      <div className="grid grid-col-1 md:grid-cols-2 gap-5 md:gap-10 xl:gap-20 mt-5 mx-5 sm:mx-10 md:mx-20 lg:mx-28 mb-14">
         <div className="">
           <p className="text-[#737373]  text-lg">
             Quisque sollicitudin feugiat risus, eu posuere ex euismod eu.
