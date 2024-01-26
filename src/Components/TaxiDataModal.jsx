@@ -1,13 +1,20 @@
 // TaxiDetails.js
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const TaxiDataDisplay = () => {
   const [taxiData, setTaxiData] = useState(null);
-
+  const navigate=useNavigate()
+  useEffect(() => {
+   
+    if (localStorage.getItem("userData") == null) {
+      navigate("/loginRegistration");
+    }
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/get_taxi/');
+        const response = await fetch('https://taxitravellers.pythonanywhere.com/api/get_taxi/');
         const data = await response.json();
 
         const userData = JSON.parse(localStorage.getItem("userData"));
@@ -29,18 +36,20 @@ const TaxiDataDisplay = () => {
 
     fetchData();
   }, []);
+  const phoneNumber = "+918210888071";
 
-   const handleWhatsappChat = () => {
-    // Placeholder function for handling WhatsApp chat
-    console.log('Handle WhatsApp Chat');
-    // Add your logic for handling WhatsApp chat here
+  const handleWhatsappChat = () => {
+    const defaultText = encodeURIComponent("Hello! I wanted to reach out to you.");
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${defaultText}`;
+    window.open(whatsappUrl, "_blank");
   };
-
+  const registrationNumber = "+917909072226";
   const handleCall = () => {
-    // Placeholder function for handling calling
-    console.log('Handle Call');
-    // Add your logic for handling calling here
+    const telUrl = `tel:${registrationNumber}`;
+    window.open(telUrl, "_blank");
   };
+
+ 
 
   return (
    <>
@@ -54,6 +63,9 @@ const TaxiDataDisplay = () => {
           </div>
           <div className="border-r border-gray-400 h-24"></div>
           <div>
+          <p className="mb-2">
+              <span className="font-bold">Booking Id:</span> {taxiData.bookingId}
+            </p>
             <p className="mb-2">
               <span className="font-bold">From Address:</span> {taxiData.fromaddress}
             </p>

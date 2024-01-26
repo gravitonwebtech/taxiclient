@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { servieUrl } from "../env/env";
 
-function Login({ onClose }) {
+function RegistrationLogin() {
   const [loginFormData, setLoginFormData] = useState({
     email: "",
     password: "",
   });
+  
 
   const [registrationFormData, setRegistrationFormData] = useState({
     fullName: "",
@@ -54,6 +55,7 @@ function Login({ onClose }) {
       }));
     }
   };
+
   const navigate = useNavigate();
 
   const handleLoginSubmit = async (e) => {
@@ -64,10 +66,7 @@ function Login({ onClose }) {
       try {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append(
-          "Cookie",
-          "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu"
-        );
+        myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
 
         const raw = JSON.stringify({
           username: loginFormData.email,
@@ -75,38 +74,34 @@ function Login({ onClose }) {
         });
 
         const requestOptions = {
-          method: "POST",
+          method: 'POST',
           headers: myHeaders,
           body: raw,
-          redirect: "follow",
+          redirect: 'follow',
         };
 
-        const response = await fetch(
-          "https://taxitravellers.pythonanywhere.com/api/login/",
-          requestOptions
-        );
+        const response = await fetch("https://taxitravellers.pythonanywhere.com/api/login/", requestOptions);
 
         if (response.ok) {
           // Credentials are correct
           const result = await response.text();
           localStorage.setItem("userData", loginFormData.email);
-          navigate("/");
+          navigate('/');
           console.log(result);
-          onClose();
-
+          ;
+          
           setLoginFormData({
             email: "",
             password: "",
           });
         } else {
           // Credentials are incorrect
-          console.error("Incorrect credentials");
-          alert("Wrong Id And Password");
-
+          console.error('Incorrect credentials');
+          alert('Wrong Id And Password');
           // You may want to update state or display an error message
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error('Error:', error);
         // Handle other errors, like network issues, server errors, etc.
       }
     } else {
@@ -191,18 +186,6 @@ const handleRegistrationSubmit = (e) => {
       .catch((error) => console.log("error", error));
   };
 
-  const handleClose = () => {
-    onClose();
-    console.log("Form closed");
-  };
-
-  const showLogin = () => {
-    setIsLogin(true);
-  };
-
-  const showRegistration = () => {
-    setIsLogin(false);
-  };
 
   const validateLogin = () => {
     const errors = {};
@@ -236,28 +219,33 @@ const handleRegistrationSubmit = (e) => {
     return errors;
   };
 
+  const showRegistration= ()=>{
+    setIsLogin(!isLogin)
+  }
+  const showLogin= ()=>{
+    setIsLogin(!isLogin)
+  }
+  
+
   return (
     <>
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+      <div className="my-20 mt-20  flex items-center justify-center">
         <div className="bg-white shadow-lg border-2 border-gray-200 rounded w-[400px] p-3 mx-5 md:mx-0">
           <div className="flex justify-between items-center mb-5">
             <h1 className="text-2xl font-semibold">
               {isLogin ? "Login" : "Register"}
             </h1>
-            <button
-              type="button"
-              onClick={handleClose}
-              className="text-black cursor-pointer"
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
+           
           </div>
-          <form
-            onSubmit={isLogin ? handleLoginSubmit : handleRegistrationSubmit}
+          
+             {isLogin ? (
+              
+                     <form
+            onSubmit={handleLoginSubmit}
           >
-            {isLogin ? (
-              <div>
+            <div>
                 <p>
+           
                   <input
                     type="text"
                     name="email"
@@ -309,7 +297,9 @@ const handleRegistrationSubmit = (e) => {
                   </button>
                 </div>
               </div>
+              </form>
             ) : (
+                <form onSubmit={handleRegistrationSubmit}>
               <div>
                 <p>
                   <input
@@ -416,12 +406,18 @@ const handleRegistrationSubmit = (e) => {
                   </button>
                 </div>
               </div>
+              </form>
             )}
-          </form>
+         
         </div>
       </div>
     </>
   );
 }
 
-export default Login;
+
+
+
+
+
+export default RegistrationLogin

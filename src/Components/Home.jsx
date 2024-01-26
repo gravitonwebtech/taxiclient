@@ -33,9 +33,11 @@ export default function Home() {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 3000);
 
+   
+
     return () => clearInterval(interval);
   }, [images.length]);
-
+ 
   const [formData, setFormData] = useState({
     fromaddress: "",
     toaddress: "",
@@ -44,6 +46,13 @@ export default function Home() {
     phone: "",
     name: "",
   });
+
+  useEffect(() => {
+    const savedData = localStorage.getItem('formData');
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  }, []);
 
   const [errors, setErrors] = useState({
     fromaddress: "",
@@ -65,11 +74,23 @@ export default function Home() {
       [e.target.name]: "",
     });
   };
+  useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
 const navigate = useNavigate()
+const [bookingId,setBookingId]=useState('')
+useEffect(() => {
+  setBookingId(Math.floor(100000 + Math.random() * 900000));
+}, []);
 const userData=localStorage.getItem('userData')
   const handleSubmit = (e) => { 
     e.preventDefault();
-
+   
+    if (localStorage.getItem("userData") === null) {
+      navigate("/loginRegistration");
+      return;
+    }
+    
     let isFormValid = true;
 
     // Validation for From Address
@@ -126,8 +147,10 @@ const userData=localStorage.getItem('userData')
       }));
       isFormValid = false;
     }
-
+   
     if (isFormValid) {
+      const currentBookingId = bookingId;
+      
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
@@ -139,7 +162,8 @@ const userData=localStorage.getItem('userData')
         "time": formData.time,
         "phone": formData.phone,
         "name":formData.name,
-        "username": userData
+        "username": userData,
+        'bookingId':currentBookingId
       });
       
       var requestOptions = {
@@ -149,7 +173,7 @@ const userData=localStorage.getItem('userData')
         redirect: 'follow'
       };
       
-      fetch("http://127.0.0.1:8000/api/get_taxi/", requestOptions)
+      fetch("https://taxitravellers.pythonanywhere.com/api/get_taxi/", requestOptions)
         .then(response => response.text())
         .then(result => {console.log(result)
         navigate('/currentData')

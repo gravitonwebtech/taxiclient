@@ -288,14 +288,14 @@ const Navbar = () => {
                   </li>
                 ) : null}
 
-                <li>
+                {/* <li>
                   <button
                     onClick={() => openBookingModal()}
                     className="hover:text-blue-500"
                   >
                     Booking Now
                   </button>
-                </li>
+                </li> */}
 
                 {localStorage.getItem("userData") !== null &&
                 localStorage.getItem("userData") !== "" ? (
@@ -472,14 +472,14 @@ const Navbar = () => {
               </Link>
             </li> */}
 
-            <li>
+            {/* <li>
               <button
                 onClick={() => openBookingModal()}
                 className="hover:text-blue-500"
               >
                 Booking Now
               </button>
-            </li>
+            </li> */}
 
             {localStorage.getItem("userData") !== null &&
             localStorage.getItem("userData") !== "" ? (
