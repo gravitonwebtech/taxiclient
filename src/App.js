@@ -6,32 +6,25 @@ import Contact from "./Components/Contact";
 import Services from "./Components/Services";
 import Footer from "./Common/Footer";
 import Location from "./Components/Location";
-import Login from "./Components/Login";
 import Booking from "./Components/Booking";
 import TaxiDataModal from "./Components/TaxiDataModal";
 import MyBooking from "./Components/MyBooking";
-
 import RegistrationLogin from "./Components/RegistrationLogin";
-
 
 function App() {
   return (
     <>
-     <Navbar />
+      <Navbar />
       <Routes>
-        <Route index path="/" element={<Home/>} />
-        <Route path="/about"  element={<About/>}  />
-        <Route path="/contact"  element={<Contact/>}  />
-        <Route path="/services"  element={<Services/>}  />
-        <Route path="/location"  element={<Location />} /> 
-        {/* <Route path="/log" element={<LoginRegistration/>}/> */}
-        <Route path="/booking"  element={<Booking/>} /> 
-        <Route path="/currentData"  element={<TaxiDataModal/>} /> 
-        <Route path="/allBooking"  element={<MyBooking/>} /> 
-        <Route path="/loginRegistration"  element={<RegistrationLogin/>} /> 
-
-
-
+        <Route index path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/location" element={<Location />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/currentData" element={<TaxiDataModal />} />
+        <Route path="/allBooking" element={<MyBooking />} />
+        <Route path="/loginRegistration" element={<RegistrationLogin />} />
       </Routes>
       <Footer />
     </>

@@ -9,7 +9,6 @@ function RegistrationLogin() {
     email: "",
     password: "",
   });
-  
 
   const [registrationFormData, setRegistrationFormData] = useState({
     fullName: "",
@@ -66,7 +65,10 @@ function RegistrationLogin() {
       try {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
+        myHeaders.append(
+          "Cookie",
+          "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu"
+        );
 
         const raw = JSON.stringify({
           username: loginFormData.email,
@@ -74,34 +76,35 @@ function RegistrationLogin() {
         });
 
         const requestOptions = {
-          method: 'POST',
+          method: "POST",
           headers: myHeaders,
           body: raw,
-          redirect: 'follow',
+          redirect: "follow",
         };
 
-        const response = await fetch("https://taxitravellers.pythonanywhere.com/api/login/", requestOptions);
+        const response = await fetch(
+          "https://taxitravellers.pythonanywhere.com/api/login/",
+          requestOptions
+        );
 
         if (response.ok) {
           // Credentials are correct
           const result = await response.text();
           localStorage.setItem("userData", loginFormData.email);
-          navigate('/');
+          navigate("/");
           console.log(result);
-          ;
-          
           setLoginFormData({
             email: "",
             password: "",
           });
         } else {
           // Credentials are incorrect
-          console.error('Incorrect credentials');
-          alert('Wrong Id And Password');
+          console.error("Incorrect credentials");
+          alert("Wrong Id And Password");
           // You may want to update state or display an error message
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
         // Handle other errors, like network issues, server errors, etc.
       }
     } else {
@@ -111,63 +114,68 @@ function RegistrationLogin() {
 
   const [username, setUserName] = useState("");
 
-const handleRegistrationSubmit = (e) => {
-  e.preventDefault();
-  const errors = validateRegistration();
-  if (Object.keys(errors).length === 0) {
-    setUserName(Math.floor(100000 + Math.random() * 900000));
+  const handleRegistrationSubmit = (e) => {
+    e.preventDefault();
+    const errors = validateRegistration();
+    if (Object.keys(errors).length === 0) {
+      setUserName(Math.floor(100000 + Math.random() * 900000));
 
-    // Move the subsequent code inside the then block
-    setUserName((newUsername) => {
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
+      // Move the subsequent code inside the then block
+      setUserName((newUsername) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append(
+          "Cookie",
+          "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu"
+        );
 
-      var raw = JSON.stringify({
-        username: newUsername,
-        password: registrationFormData.password,
-        fullname: registrationFormData.fullName,
-        email: registrationFormData.email,
-        phone_number: registrationFormData.phoneNumber,
-        address: registrationFormData.rePassword,
-      });
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      fetch("https://taxitravellers.pythonanywhere.com/api/register/", requestOptions)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("User registration failed");
-          }
-          return response.json();
-        })
-        .then((result) => {
-          alert("Form Submitted");
-          emailSending(newUsername);
-        })
-        .catch((error) => {
-          console.error("Error during registration:", error);
-          alert("User registration failed. Email is already registered.");
+        var raw = JSON.stringify({
+          username: newUsername,
+          password: registrationFormData.password,
+          fullname: registrationFormData.fullName,
+          email: registrationFormData.email,
+          phone_number: registrationFormData.phoneNumber,
+          address: registrationFormData.rePassword,
         });
 
-      setRegistrationFormData({
-        fullName: "",
-        email: "",
-        password: "",
-        rePassword: "",
-        phoneNumber: "",
-      });
-    });
-  } else {
-    setRegistrationErrors(errors);
-  }
-};
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
 
+        fetch(
+          "https://taxitravellers.pythonanywhere.com/api/register/",
+          requestOptions
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("User registration failed");
+            }
+            return response.json();
+          })
+          .then((result) => {
+            alert("Form Submitted");
+            emailSending(newUsername);
+          })
+          .catch((error) => {
+            console.error("Error during registration:", error);
+            alert("User registration failed. Email is already registered.");
+          });
+
+        setRegistrationFormData({
+          fullName: "",
+          email: "",
+          password: "",
+          rePassword: "",
+          phoneNumber: "",
+        });
+      });
+    } else {
+      setRegistrationErrors(errors);
+    }
+  };
 
   const emailSending = (newUsername) => {
     var formdata = new FormData();
@@ -185,7 +193,6 @@ const handleRegistrationSubmit = (e) => {
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   };
-
 
   const validateLogin = () => {
     const errors = {};
@@ -219,13 +226,12 @@ const handleRegistrationSubmit = (e) => {
     return errors;
   };
 
-  const showRegistration= ()=>{
-    setIsLogin(!isLogin)
-  }
-  const showLogin= ()=>{
-    setIsLogin(!isLogin)
-  }
-  
+  const showRegistration = () => {
+    setIsLogin(!isLogin);
+  };
+  const showLogin = () => {
+    setIsLogin(!isLogin);
+  };
 
   return (
     <>
@@ -235,17 +241,12 @@ const handleRegistrationSubmit = (e) => {
             <h1 className="text-2xl font-semibold">
               {isLogin ? "Login" : "Register"}
             </h1>
-           
           </div>
-          
-             {isLogin ? (
-              
-                     <form
-            onSubmit={handleLoginSubmit}
-          >
-            <div>
+
+          {isLogin ? (
+            <form onSubmit={handleLoginSubmit}>
+              <div>
                 <p>
-           
                   <input
                     type="text"
                     name="email"
@@ -297,9 +298,9 @@ const handleRegistrationSubmit = (e) => {
                   </button>
                 </div>
               </div>
-              </form>
-            ) : (
-                <form onSubmit={handleRegistrationSubmit}>
+            </form>
+          ) : (
+            <form onSubmit={handleRegistrationSubmit}>
               <div>
                 <p>
                   <input
@@ -406,18 +407,12 @@ const handleRegistrationSubmit = (e) => {
                   </button>
                 </div>
               </div>
-              </form>
-            )}
-         
+            </form>
+          )}
         </div>
       </div>
     </>
   );
 }
 
-
-
-
-
-
-export default RegistrationLogin
+export default RegistrationLogin;

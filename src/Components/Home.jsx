@@ -31,9 +31,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
-
-   
+    }, 3000);  
 
     return () => clearInterval(interval);
   }, [images.length]);
@@ -77,12 +75,15 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
   }, [formData]);
+
 const navigate = useNavigate()
 const [bookingId,setBookingId]=useState('')
 useEffect(() => {
   setBookingId(Math.floor(100000 + Math.random() * 900000));
 }, []);
+
 const userData=localStorage.getItem('userData')
+
   const handleSubmit = (e) => { 
     e.preventDefault();
    
