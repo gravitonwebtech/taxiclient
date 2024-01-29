@@ -166,15 +166,15 @@ const MyBooking = () => {
                         {dataItem.action == "active" ? (
                           <td className="border" onClick={GetTaxi}>
                             <div className="flex justify-center">
-                              <span className="cursor-pointer bg-yellow-400 text-white font-bold rounded m-5 xl:mx-0 px-4 py-1">
-                                Check Your Taxi
+                              <span className="cursor-pointer bg-yellow-400 text-white font-semibold rounded m-5 xl:mx-0 px-4 py-1">
+                                Check Taxi
                               </span>
                             </div>
                           </td>
                         ) : dataItem.action == "pending" ? (
                           <td className="border">
                             <div className="flex justify-center">
-                              <span className="cursor-pointer bg-red-600 text-white font-bold rounded mx-5 xl:mx-0 px-4 py-1">
+                              <span className="cursor-pointer bg-red-600 text-white font-semibold rounded  mx-5 xl:mx-0 px-4 py-1">
                                 Pending
                               </span>
                             </div>
@@ -182,7 +182,7 @@ const MyBooking = () => {
                         ) : (
                           <td className="border">
                             <div className="flex justify-center">
-                              <span className="cursor-pointer bg-red-600 text-white font-bold rounded mx-5 xl:mx-0 px-4 py-1">
+                              <span className="cursor-pointer bg-red-600 text-white font-semibold rounded mx-5 xl:mx-0 px-4 py-1">
                                 Completed
                               </span>
                             </div>

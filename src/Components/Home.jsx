@@ -31,11 +31,11 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);  
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [images.length]);
- 
+
   const [formData, setFormData] = useState({
     fromaddress: "",
     toaddress: "",
@@ -46,12 +46,13 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const savedData = localStorage.getItem('formData');
+    const savedData = localStorage.getItem("formData");
     if (savedData) {
       setFormData(JSON.parse(savedData));
     }
   }, []);
 
+ 
   const [errors, setErrors] = useState({
     fromaddress: "",
     toaddress: "",
@@ -62,7 +63,8 @@ export default function Home() {
   });
 
   const handleInputChange = (e) => {
-    setFormData({
+
+   setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
@@ -73,25 +75,25 @@ export default function Home() {
     });
   };
   useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData));
+    localStorage.setItem("formData", JSON.stringify(formData));
   }, [formData]);
 
-const navigate = useNavigate()
-const [bookingId,setBookingId]=useState('')
-useEffect(() => {
-  setBookingId(Math.floor(100000 + Math.random() * 900000));
-}, []);
+  const navigate = useNavigate();
+  const [bookingId, setBookingId] = useState("");
+  useEffect(() => {
+    setBookingId(Math.floor(100000 + Math.random() * 900000));
+  }, []);
 
-const userData=localStorage.getItem('userData')
+  const userData = localStorage.getItem("userData");
 
-  const handleSubmit = (e) => { 
+  const handleSubmit = (e) => {
     e.preventDefault();
-   
+
     if (localStorage.getItem("userData") === null) {
       navigate("/loginRegistration");
       return;
     }
-    
+
     let isFormValid = true;
 
     // Validation for From Address
@@ -148,38 +150,42 @@ const userData=localStorage.getItem('userData')
       }));
       isFormValid = false;
     }
-   
+
     if (isFormValid) {
       const currentBookingId = bookingId;
-      
+
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
-      
+
       var raw = JSON.stringify({
-        "fromaddress": formData.fromaddress,
-        "toaddress": formData.toaddress,
-        "date": formData.date,
-        "time": formData.time,
-        "phone": formData.phone,
-        "name":formData.name,
-        "username": userData,
-        'bookingId':currentBookingId
+        fromaddress: formData.fromaddress,
+        toaddress: formData.toaddress,
+        date: formData.date,
+        time: formData.time,
+        phone: formData.phone,
+        name: formData.name,
+        username: userData,
+        bookingId: currentBookingId,
       });
-      
+
       var requestOptions = {
-        method: 'POST',
+        method: "POST",
         headers: myHeaders,
         body: raw,
-        redirect: 'follow'
+        redirect: "follow",
       };
-      
-      fetch("https://taxitravellers.pythonanywhere.com/api/get_taxi/", requestOptions)
-        .then(response => response.text())
-        .then(result => {console.log(result)
-        navigate('/currentData')
+
+      fetch(
+        "https://taxitravellers.pythonanywhere.com/api/get_taxi/",
+        requestOptions
+      )
+        .then((response) => response.text())
+        .then((result) => {
+          console.log(result);
+          navigate("/currentData");
         })
-        .catch(error => console.log('error', error));
+        .catch((error) => console.log("error", error));
 
       setFormData({
         fromaddress: "",
