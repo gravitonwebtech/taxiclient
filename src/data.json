@@ -1,37 +1,37 @@
-
 [
-    {
-      "DriverName": "John Doe",
-      "DriverAddress": "123 Main Street",
-      "VehicleModel": "Toyota Camry",
-      "VehicleNumber": "ABC123",
-      "SeatCapacity": 4,
-      "TotalAmount": 100,
-      "AmountPerKm": 10,
-      "SellAmount": 90,
-      "DriverId": 1
-    },
-    {
-      "DriverName": "Alice Smith",
-      "DriverAddress": "456 Oak Avenue",
-      "VehicleModel": "Honda Accord",
-      "VehicleNumber": "XYZ789",
-      "SeatCapacity": 5,
-      "TotalAmount": 120,
-      "AmountPerKm": 12,
-      "SellAmount": 110,
-      "DriverId": 2
-    },
-    {
-      "DriverName": "Bob Johnson",
-      "DriverAddress": "789 Elm Street",
-      "VehicleModel": "Ford Explorer",
-      "VehicleNumber": "PQR456",
-      "SeatCapacity": 7,
-      "TotalAmount": 150,
-      "AmountPerKm": 15,
-      "SellAmount": 130,
-      "DriverId": 3
-    }
-  ]
-  
+  "Salem",
+  "Kalamassery",
+  "Sangli Miraj Kupwad",
+  "Kalyan",
+  "Secunderabad",
+  "Kanpur",
+  "Sitamarhi",
+  "Kishanganj",
+  "Srinagar",
+  "Kochi",
+  "Surat",
+  "Kolkata",
+  "Thane",
+  "Kollam",
+  "Thiruvananthapuram",
+  "Latur",
+  "Thiruvankulam",
+  "Lucknow",
+  "Thrippunithura",
+  "Ludhiana",
+  "Tronica City",
+  "Madurai",
+  "Vadodara",
+  "Mainpuri",
+  "Varanasi",
+  "Manesar",
+  "Vazhakkala",
+  "Mohali",
+  "Vijayawada",
+  "Moradabad",
+  "Motihari",
+  "Mumbai",
+  "Munger",
+  "Muradnagar",
+  "Muzaffarpur"
+]

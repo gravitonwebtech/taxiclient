@@ -46,7 +46,7 @@ const MyBooking = () => {
 
         // Set the single key data in the booking state
         setBooking(singleKeyData);
-        console.log("book---->", singleKeyData);
+
         setTaxiData(data);
       } catch (error) {
         console.error("Error fetching taxi data:", error);
@@ -56,10 +56,7 @@ const MyBooking = () => {
     fetchData();
   }, []);
 
-  const GetTaxi = () => {
-    setOpen(!open);
-    alert("Thank you");
-  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,6 +81,24 @@ const MyBooking = () => {
   // Rest of your code...
 
   // ...
+
+  // ...
+  const [driverone, setDriverone] = useState([]);
+
+  const GetTaxi = (bookingId) => {
+    setOpen(!open);
+    alert(`Thank you for booking ID ${bookingId}`);
+
+    // Filter driverData based on bookingId
+    const filteredDrivers = driverData.filter(
+      (item) => bookingId === item.bookingId
+    );
+    setDriverone(filteredDrivers);
+
+
+   
+  };
+
 
   const BackHandle = () => {
     setOpen(!open);
@@ -164,7 +179,10 @@ const MyBooking = () => {
                         <td className="border p-4">{dataItem.phone}</td>
                         <td className="border p-4">{dataItem.name}</td>
                         {dataItem.action == "active" ? (
-                          <td className="border" onClick={GetTaxi}>
+                          <td
+                            className="border"
+                            onClick={() => GetTaxi(dataItem.bookingId)}
+                          >
                             <div className="flex justify-center">
                               <span className="cursor-pointer bg-yellow-400 text-white font-semibold rounded m-5 xl:mx-0 px-4 py-1">
                                 Check Taxi
@@ -273,7 +291,7 @@ const MyBooking = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {driverData.map((driver) => (
+                    {driverone.map((driver) => (
                       <tr key={driver.DriverId} className="text-white">
                         <td className="p-4 border">{driver.bookingId}</td>
                         <td className="p-4 border">{driver.DriverName}</td>

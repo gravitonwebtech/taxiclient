@@ -7,43 +7,13 @@ import Car4 from "../Assests/Homepageimages/car4.png";
 import "./TaxiDataModel.css";
 
 const TaxiDataDisplay = () => {
-  const [taxiData, setTaxiData] = useState(null);
+  const [taxiData, setTaxiData] = useState([]);
+  const [open, setOpen] = useState(true);
 
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (localStorage.getItem("userData") == null) {
-      navigate("/loginRegistration");
-    }
-  }, []);
+  const localData = localStorage.getItem("userData");
+  const [booking, setBooking] = useState([]);
+  const [driverData, setDriverData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://taxitravellers.pythonanywhere.com/api/get_taxi/"
-        );
-        const data = await response.json();
-        const userData = JSON.parse(localStorage.getItem("userData"));
-
-        // Filter data based on user preferences
-        const filteredData = data.filter((item) => {
-          return Object.entries(userData).every(
-            ([key, value]) => item[key] === value
-          );
-        });
-
-        // Reverse the array to get the latest filtered data
-        const reversedData = filteredData.reverse();
-
-        // Assuming the latest filtered data is now the first element
-        setTaxiData(reversedData[0]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
   const phoneNumber = "+918210888071";
 
   const handleWhatsappChat = () => {
@@ -58,43 +28,80 @@ const TaxiDataDisplay = () => {
     const telUrl = `tel:${registrationNumber}`;
     window.open(telUrl, "_blank");
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("userData") == null) {
+      navigate("/loginRegistration");
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://taxitravellers.pythonanywhere.com/api/get_taxi/"
+        );
+        const data = await response.json();
+
+        // Assuming you want to set a single key, change 'item.someKey' to the key you want to use
+        const singleKeyData = data.map((item) => item.bookingId);
+
+        // Set the single key data in the booking state
+        setBooking(singleKeyData);
+        console.log("book---->", singleKeyData);
+        setTaxiData(data);
+      } catch (error) {
+        console.error("Error fetching taxi data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const lastFilter = taxiData.filter((item) => item.username === localData);
+  const lastFilteredData = lastFilter.slice(-1)[0]; // Get the last item of the filtered array
+
+  // Now you can use lastFilteredData as the last data of the filtered result
+  console.log("Last Filtered Data:", lastFilteredData);
 
   return (
     <>
       <div className="current-data-bg mt-16">
         <div className="flex items-center justify-center h-screen">
-          {taxiData ? (
+          {lastFilteredData ? (
             <div className="current-data bg-white bg-opacity-10 shadow rounded p-5 w-[400px] md:w-[500px] mx-5 md:mx-0">
-
               <div className="">
                 <h2 className="text-2xl font-bold text-[#FFC61A] mb-5">
-                  {taxiData.action === "pending" ? "Processing" : "Completed"}
+                  {lastFilteredData.action === "pending"
+                    ? "Processing"
+                    : "Completed"}
                 </h2>
               </div>
 
-
               <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-5">
-                <div className="bg-[#FFC61A] flex flex-col justify-center px-3 py-2 rounded cursor-pointer">
-                  <img src={Car1}></img>
-                  <h1 className="text-sm font-semibold text-center text-white mt-2">
-                    Mini
-                  </h1>
-                </div>
-
-                <div className="hover:bg-[#FFC61A] flex flex-col justify-center  px-3 py-2 rounded cursor-pointer">
-                  <img src={Car2}></img>
-                  <h1 className="text-sm font-semibold text-center text-white mt-2">
-                    Syden
-                  </h1>
-                </div>
-
-                <div className="hover:bg-[#FFC61A] flex flex-col justify-center  px-3 py-2 rounded cursor-pointer">
-                  <img src={Car4}></img>
-                  <h1 className="text-sm font-semibold text-center text-white mt-2">
-                    SUV
-                  </h1>
-                </div>
-                </div>
+                {lastFilteredData.typeOfCar === "Mini" ? (
+                  <div className="bg-[#FFC61A] flex flex-col justify-center px-3 py-2 rounded cursor-pointer">
+                    <img src={Car1} alt="Mini Car" />
+                    <h1 className="text-sm font-semibold text-center text-white mt-2">
+                      Mini
+                    </h1>
+                  </div>
+                ) : lastFilteredData.typeOfCar === "Syden" ? (
+                  <div className="hover:bg-[#FFC61A] flex flex-col justify-center  px-3 py-2 rounded cursor-pointer">
+                    <img src={Car2}></img>
+                    <h1 className="text-sm font-semibold text-center text-white mt-2">
+                      Syden
+                    </h1>
+                  </div>
+                ) : lastFilteredData.typeOfCar === "SUV" ? (
+                  <div className="hover:bg-[#FFC61A] flex flex-col justify-center  px-3 py-2 rounded cursor-pointer">
+                    <img src={Car4}></img>
+                    <h1 className="text-sm font-semibold text-center text-white mt-2">
+                      SUV
+                    </h1>
+                  </div>
+                ) : null}
+              </div>
 
               <div className="mt-5">
                 <div className="mb-3 grid grid-cols-12">
@@ -105,7 +112,7 @@ const TaxiDataDisplay = () => {
                   </div>
                   <div className="col-span-7">
                     <span className="text-md font-semibold text-white">
-                      {taxiData.bookingId}
+                      {lastFilteredData.bookingId}
                     </span>
                   </div>
                 </div>
@@ -118,7 +125,7 @@ const TaxiDataDisplay = () => {
                   </div>
                   <div className="col-span-7">
                     <span className="text-md font-semibold text-white">
-                      {taxiData.fromaddress}
+                      {lastFilteredData.fromaddress}
                     </span>
                   </div>
                 </div>
@@ -131,7 +138,7 @@ const TaxiDataDisplay = () => {
                   </div>
                   <div className="col-span-7">
                     <span className="text-md font-semibold text-white">
-                      {taxiData.toaddress}
+                      {lastFilteredData.toaddress}
                     </span>
                   </div>
                 </div>
@@ -144,7 +151,7 @@ const TaxiDataDisplay = () => {
                   </div>
                   <div className="col-span-7">
                     <span className="text-md font-semibold text-white">
-                      {taxiData.date}
+                      {lastFilteredData.date}
                     </span>
                   </div>
                 </div>
@@ -157,7 +164,7 @@ const TaxiDataDisplay = () => {
                   </div>
                   <div className="col-span-7">
                     <span className="text-md font-semibold text-white">
-                      {taxiData.time}
+                      {lastFilteredData.time}
                     </span>
                   </div>
                 </div>
@@ -170,7 +177,7 @@ const TaxiDataDisplay = () => {
                   </div>
                   <div className="col-span-7">
                     <span className="text-md font-semibold text-white">
-                      {taxiData.phone}
+                      {lastFilteredData.phone}
                     </span>
                   </div>
                 </div>
@@ -183,12 +190,12 @@ const TaxiDataDisplay = () => {
                   </div>
                   <div className="col-span-7">
                     <span className="text-md font-semibold text-white">
-                      {taxiData.name}
+                      {lastFilteredData.name}
                     </span>
                   </div>
                 </div>
 
-                {taxiData.action === "pending" && (
+                {lastFilteredData.action === "pending" && (
                   <>
                     <div className="hidden md:block">
                       <button

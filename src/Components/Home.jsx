@@ -23,6 +23,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import data from "../data.json";
 
 export default function Home() {
   const images = [sliderimage1, sliderimage2];
@@ -52,7 +53,6 @@ export default function Home() {
     }
   }, []);
 
- 
   const [errors, setErrors] = useState({
     fromaddress: "",
     toaddress: "",
@@ -60,11 +60,73 @@ export default function Home() {
     time: "",
     phone: "",
     name: "",
-  });
+  }); 
+ 
+  // SelectedCar 
+  const [selectedCar, setSelectedCar] = useState('');
+
+  const handleCarSelect = (carType) => {
+    // Log the selected car data to the console
+    console.log(`Selected car: ${carType}`);
+    setSelectedCar(carType);
+  };
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = (query) => {
+    setSearchTerm(query);
+    const filteredResults = data.filter((item) =>
+      item.toLowerCase().includes(query.toLowerCase())
+    );
+    setSearchResults(filteredResults);
+  };
+
+  const handleSelect = (selectedItem) => {
+    setSearchTerm(selectedItem);
+    setSearchResults([]); // Clear search results after selection
+  };
+
+  const [searchTermTo, setSearchTermTo] = useState("");
+  const [searchResultsTo, setSearchResultsTo] = useState([]);
+
+  const handleSearchTo = (query) => {
+    setSearchTermTo(query);
+    const filteredResultsTo = data.filter((item) =>
+      item.toLowerCase().includes(query.toLowerCase())
+    );
+    setSearchResultsTo(filteredResultsTo);
+  };
+
+  const handleSelectTo = (selectedItem) => {
+    setSearchTermTo(selectedItem);
+    setSearchResultsTo([]); // Clear search results after selection
+  };
+
+  // Load saved data from local storage on component mount
+  useEffect(() => {
+    const savedSearchTerm = localStorage.getItem("searchTerm");
+    if (savedSearchTerm) {
+      setSearchTerm(savedSearchTerm);
+    }
+
+    const savedSearchTermTo = localStorage.getItem("searchTermTo");
+    if (savedSearchTermTo) {
+      setSearchTermTo(savedSearchTermTo);
+    }
+  }, []); // Empty dependency array to run this effect only once on mount
+
+  // Save input data to local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("searchTerm", searchTerm);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    localStorage.setItem("searchTermTo", searchTermTo);
+  }, [searchTermTo]);
 
   const handleInputChange = (e) => {
-
-   setFormData({
+    setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
@@ -97,7 +159,7 @@ export default function Home() {
     let isFormValid = true;
 
     // Validation for From Address
-    if (!formData.fromaddress.trim()) {
+    if (!searchTerm.trim()) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         fromaddress: "From Address is required.",
@@ -106,7 +168,7 @@ export default function Home() {
     }
 
     // Validation for To Address
-    if (!formData.toaddress.trim()) {
+    if (!searchTermTo.trim()) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         toaddress: "To Address is required.",
@@ -134,13 +196,14 @@ export default function Home() {
 
     // Validation for Phone Number
 
-    if (!formData.phone.trim() || !/^\d{10}$/.test(formData.phone.trim())) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        phone: "Please enter a valid 10-digit number.",
-      }));
-      isFormValid = false;
-    }
+    const validPhoneNumberRegex = /^[6-9]\d{9}$/;
+if (!formData.phone.trim() || !validPhoneNumberRegex.test(formData.phone.trim())) {
+  setErrors((prevErrors) => ({
+    ...prevErrors,
+    phone: "Enter a Valid Number",
+  }));
+  isFormValid = false;
+}
 
     // Validation for Name
     if (!formData.name.trim()) {
@@ -159,14 +222,15 @@ export default function Home() {
       myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
 
       var raw = JSON.stringify({
-        fromaddress: formData.fromaddress,
-        toaddress: formData.toaddress,
+        fromaddress: searchTerm,
+        toaddress: searchTermTo,
         date: formData.date,
         time: formData.time,
         phone: formData.phone,
         name: formData.name,
         username: userData,
         bookingId: currentBookingId,
+        typeOfCar:selectedCar
       });
 
       var requestOptions = {
@@ -183,6 +247,7 @@ export default function Home() {
         .then((response) => response.text())
         .then((result) => {
           console.log(result);
+          console.log('newDatralkjdfsvsdj====',selectedCar)
           navigate("/currentData");
         })
         .catch((error) => console.log("error", error));
@@ -206,6 +271,11 @@ export default function Home() {
       });
     }
   };
+
+  //Car Selected
+
+
+
 
   return (
     <>
@@ -483,43 +553,71 @@ export default function Home() {
                 <span className="text-[#FFC61A]"> ONLINE</span>
               </h1>
               <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-5">
-                <div className="bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
-                  <img src={Car1}></img>
+                <div
+                  className={`flex flex-col justify-center p-5 rounded cursor-pointer ${
+                    selectedCar === "Mini" ? "bg-[#FFC61A]" : ""
+                  }`}
+                  onClick={() => handleCarSelect("Mini")}
+                >
+                  <img src={Car1} alt="Mini"></img>
                   <h1 className="text-sm font-semibold text-center text-white mt-2">
                     Mini
                   </h1>
                 </div>
 
-                <div className="hover:bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
-                  <img src={Car2}></img>
+                <div
+                  className={`flex flex-col justify-center p-5 rounded cursor-pointer ${
+                    selectedCar === "Syden" ? "bg-[#FFC61A]" : ""
+                  }`}
+                  onClick={() => handleCarSelect("Syden")}
+                >
+                  <img src={Car2} alt="Syden"></img>
                   <h1 className="text-sm font-semibold text-center text-white mt-2">
                     Syden
                   </h1>
                 </div>
 
-                {/* <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
-                  <img src={Car3}></img>
-                </div> */}
+                {/* Add similar logic for other car types */}
 
-                <div className="hover:bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
-                  <img src={Car4}></img>
+                <div
+                  className={`flex flex-col justify-center p-5 rounded cursor-pointer ${
+                    selectedCar === "SUV" ? "bg-[#FFC61A]" : ""
+                  }`}
+                  onClick={() => handleCarSelect("SUV")}
+                >
+                  <img src={Car4} alt="SUV"></img>
                   <h1 className="text-sm font-semibold text-center text-white mt-2">
                     SUV
                   </h1>
                 </div>
-              </div>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 md:mt-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 ">
                 <p>
                   <input
                     type="text"
                     id="fromaddress"
-                    name="fromaddress"
                     placeholder="From Address"
-                    value={formData.fromaddress}
-                    onChange={handleInputChange}
-                    class="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
+                    value={searchTerm}
+                    autoComplete="off"
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
                   />
+                  {searchResults.length > 0 && (
+                    <div className="search-results-container bg-gray-200 mt-2 p-2 max-h-32 overflow-y-auto">
+                      <ul className="search-results-list">
+                        {searchResults.map((result, index) => (
+                          <li
+                            key={index}
+                            onClick={() => handleSelect(result)}
+                            className="cursor-pointer hover:bg-gray-300 px-2 py-1 rounded"
+                          >
+                            {result}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   {errors.fromaddress && (
                     <span className="text-red-400 text-sm">
@@ -531,12 +629,27 @@ export default function Home() {
                   <input
                     type="text"
                     id="toaddress"
-                    name="toaddress"
                     placeholder="To Address"
-                    value={formData.toaddress}
-                    onChange={handleInputChange}
+                    autoComplete="off"
+                    value={searchTermTo}
+                    onChange={(e) => handleSearchTo(e.target.value)}
                     className="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
                   />
+                  {searchResultsTo.length > 0 && (
+                    <div className="search-results-container bg-gray-200 mt-2 p-2 max-h-32 overflow-y-auto">
+                      <ul className="search-results-list">
+                        {searchResultsTo.map((result, index) => (
+                          <li
+                            key={index}
+                            onClick={() => handleSelectTo(result)}
+                            className="cursor-pointer hover:bg-gray-300 px-2 py-1 rounded"
+                          >
+                            {result}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   {errors.toaddress && (
                     <span className="text-red-400 text-sm">
                       {errors.toaddress}

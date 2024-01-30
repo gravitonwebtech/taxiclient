@@ -41,6 +41,12 @@ function RegistrationLogin() {
 
   const handleRegistrationChange = (e) => {
     const { name, value } = e.target;
+  
+    // Allow the user to type more than 10 digits before showing an error
+    if (name === 'phoneNumber' && value.length > 10) {
+      return;
+    }
+  
     setRegistrationFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -158,6 +164,7 @@ function RegistrationLogin() {
           .then((result) => {
             alert("Form Submitted");
             emailSending(newUsername);
+            setIsLogin(!isLogin);
           })
           .catch((error) => {
             console.error("Error during registration:", error);
@@ -210,8 +217,11 @@ function RegistrationLogin() {
     if (!registrationFormData.fullName) {
       errors.fullName = "Fullname is required";
     }
-    if (!registrationFormData.phoneNumber) {
-      errors.phoneNumber = "Phone Number is required";
+    const validPhoneNumberRegex = /^[6-9]\d{9}$/;
+    if (!registrationFormData.phoneNumber.trim() || !validPhoneNumberRegex.test(registrationFormData.phoneNumber.trim())) {
+      errors.phoneNumber = "Enter Valid Number .";
+    } else if (registrationFormData.phoneNumber.trim().length !== 10) {
+      errors.phoneNumber = "Phone Number must have exactly 10 digits.";
     }
     if (!registrationFormData.email) {
       errors.email = "Email is required";
