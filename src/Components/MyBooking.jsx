@@ -37,7 +37,7 @@ const MyBooking = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://taxitravellers.pythonanywhere.com/api/get_taxi/"
+         servieUrl.url + "api/get_taxi/"
         );
         const data = await response.json();
 

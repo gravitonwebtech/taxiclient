@@ -5,7 +5,8 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Contact.css"
+import "./Contact.css";
+import { servieUrl } from "../env/env";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -26,16 +27,36 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form data:", formData);
-      // Proceed with any further actions (e.g., API call) here
-
-      // Clear form fields
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        textarea: "",
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
+      
+      var raw = JSON.stringify({
+        "name": formData.name,
+        "email": formData.email,
+        "phone": formData.phone,
+        "textarea": formData.textarea
       });
+      
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      
+      fetch(servieUrl.url + "api/contact/", requestOptions)
+        .then(response => response.text())
+        .then(result =>{ 
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            textarea: "",
+          });
+        })
+        .catch(error => console.log('error', error));
+     
     }
   };
 
@@ -52,8 +73,17 @@ export default function Contact() {
       newErrors.email = "Invalid email address";
     }
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
+    // if (!formData.phone.trim()) {
+    //   newErrors.phone = "Phone number is required";
+    // }
+    const validPhoneNumberRegex = /^[6-9]\d{9}$/;
+    if (
+      !formData.phone.trim() ||
+      !validPhoneNumberRegex.test(formData.phone.trim())
+    ) {
+      newErrors.phone = "Enter Valid Number .";
+    } else if (formData.phone.trim().length !== 10) {
+      newErrors.phone = "Phone Number must have exactly 10 digits.";
     }
 
     if (!formData.textarea.trim()) {
@@ -64,11 +94,10 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-
   return (
     <>
-     {/* banner */}
-     <div className="contact-banner-img mt-16"></div>
+      {/* banner */}
+      <div className="contact-banner-img mt-16"></div>
 
       <div className="overflow-x-hidden">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-10 mx-5 sm:mx-10 md:mx-20 lg:mx-28 mt-10 md:mt-14">
@@ -82,7 +111,7 @@ export default function Contact() {
             </p>
             <div className="mt-5 md:mt-8">
               <div className="flex">
-              <FontAwesomeIcon
+                <FontAwesomeIcon
                   icon={faPhone}
                   className="text-[#f0bb3a] text-lg font-semibold"
                 />
@@ -95,7 +124,7 @@ export default function Contact() {
 
             <div className="mt-5">
               <div className="flex">
-              <FontAwesomeIcon
+                <FontAwesomeIcon
                   icon={faEnvelope}
                   className="text-[#f0bb3a] text-lg font-semibold"
                 />
@@ -109,7 +138,7 @@ export default function Contact() {
 
             <div className="mt-5">
               <div className="flex">
-              <FontAwesomeIcon
+                <FontAwesomeIcon
                   icon={faLocationDot}
                   className="text-[#f0bb3a] text-lg font-semibold "
                 />
@@ -140,7 +169,9 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                 />
-                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name}</p>
+                )}
 
                 <input
                   type="email"
@@ -150,19 +181,18 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                 />
-                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email}</p>
+                )}
 
-                 <input
+                <input
                   type="text"
                   name="phone"
                   placeholder="Enter Your Number"
                   className="py-2 w-full rounded font-semibold text-gray-500 border-2 border-gray-100 px-5"
                   value={formData.phone}
                   onChange={(e) => {
-                    const numericValue = e.target.value.replace(
-                      /[^0-9]/g,
-                      ""
-                    );
+                    const numericValue = e.target.value.replace(/[^0-9]/g, "");
                     setFormData({
                       ...formData,
                       phone: numericValue,
@@ -170,7 +200,9 @@ export default function Contact() {
                   }}
                   maxLength="10"
                 />
-                {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                {errors.phone && (
+                  <p className="text-red-500 text-sm">{errors.phone}</p>
+                )}
 
                 <textarea
                   name="textarea"
@@ -201,15 +233,15 @@ export default function Contact() {
 
       {/* map start   */}
       <div className="mt-5">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235526.94958618667!2d75.69903414952232!3d22.724204998667577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410ddb%3A0x96ec4da356240f4!2sIndore%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1704170978249!5m2!1sen!2sin"
-        className="w-full h-[50vh] px-1"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235526.94958618667!2d75.69903414952232!3d22.724204998667577!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410ddb%3A0x96ec4da356240f4!2sIndore%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1704170978249!5m2!1sen!2sin"
+          className="w-full h-[50vh] px-1"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
-     
+
       {/* map End    */}
     </>
   );

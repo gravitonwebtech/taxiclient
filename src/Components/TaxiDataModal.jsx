@@ -5,6 +5,7 @@ import Car2 from "../Assests/Homepageimages/car2.png";
 import Car3 from "../Assests/Homepageimages/car3.png";
 import Car4 from "../Assests/Homepageimages/car4.png";
 import "./TaxiDataModel.css";
+import { servieUrl } from "../env/env";
 
 const TaxiDataDisplay = () => {
   const [taxiData, setTaxiData] = useState([]);
@@ -39,7 +40,7 @@ const TaxiDataDisplay = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://taxitravellers.pythonanywhere.com/api/get_taxi/"
+          servieUrl.url + "api/get_taxi/"
         );
         const data = await response.json();
 

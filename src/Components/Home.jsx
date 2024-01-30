@@ -24,6 +24,7 @@ import {
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import data from "../data.json";
+import { servieUrl } from "../env/env";
 
 export default function Home() {
   const images = [sliderimage1, sliderimage2];
@@ -60,10 +61,10 @@ export default function Home() {
     time: "",
     phone: "",
     name: "",
-  }); 
- 
-  // SelectedCar 
-  const [selectedCar, setSelectedCar] = useState('');
+  });
+
+  // SelectedCar
+  const [selectedCar, setSelectedCar] = useState("");
 
   const handleCarSelect = (carType) => {
     // Log the selected car data to the console
@@ -197,13 +198,16 @@ export default function Home() {
     // Validation for Phone Number
 
     const validPhoneNumberRegex = /^[6-9]\d{9}$/;
-if (!formData.phone.trim() || !validPhoneNumberRegex.test(formData.phone.trim())) {
-  setErrors((prevErrors) => ({
-    ...prevErrors,
-    phone: "Enter a Valid Number",
-  }));
-  isFormValid = false;
-}
+    if (
+      !formData.phone.trim() ||
+      !validPhoneNumberRegex.test(formData.phone.trim())
+    ) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        phone: "Enter a Valid Number",
+      }));
+      isFormValid = false;
+    }
 
     // Validation for Name
     if (!formData.name.trim()) {
@@ -230,7 +234,7 @@ if (!formData.phone.trim() || !validPhoneNumberRegex.test(formData.phone.trim())
         name: formData.name,
         username: userData,
         bookingId: currentBookingId,
-        typeOfCar:selectedCar
+        typeOfCar: selectedCar,
       });
 
       var requestOptions = {
@@ -241,13 +245,13 @@ if (!formData.phone.trim() || !validPhoneNumberRegex.test(formData.phone.trim())
       };
 
       fetch(
-        "https://taxitravellers.pythonanywhere.com/api/get_taxi/",
+        servieUrl.url + "api/get_taxi/",
         requestOptions
       )
         .then((response) => response.text())
         .then((result) => {
           console.log(result);
-          console.log('newDatralkjdfsvsdj====',selectedCar)
+          console.log("newDatralkjdfsvsdj====", selectedCar);
           navigate("/currentData");
         })
         .catch((error) => console.log("error", error));
@@ -273,9 +277,6 @@ if (!formData.phone.trim() || !validPhoneNumberRegex.test(formData.phone.trim())
   };
 
   //Car Selected
-
-
-
 
   return (
     <>
@@ -564,7 +565,6 @@ if (!formData.phone.trim() || !validPhoneNumberRegex.test(formData.phone.trim())
                     Mini
                   </h1>
                 </div>
-
                 <div
                   className={`flex flex-col justify-center p-5 rounded cursor-pointer ${
                     selectedCar === "Syden" ? "bg-[#FFC61A]" : ""
@@ -576,9 +576,7 @@ if (!formData.phone.trim() || !validPhoneNumberRegex.test(formData.phone.trim())
                     Syden
                   </h1>
                 </div>
-
                 {/* Add similar logic for other car types */}
-
                 <div
                   className={`flex flex-col justify-center p-5 rounded cursor-pointer ${
                     selectedCar === "SUV" ? "bg-[#FFC61A]" : ""
@@ -590,7 +588,8 @@ if (!formData.phone.trim() || !validPhoneNumberRegex.test(formData.phone.trim())
                     SUV
                   </h1>
                 </div>
-              </div>
+                          
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 ">
                 <p>

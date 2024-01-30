@@ -89,7 +89,7 @@ function RegistrationLogin() {
         };
 
         const response = await fetch(
-          "https://taxitravellers.pythonanywhere.com/api/login/",
+        servieUrl.url +  "api/login/",
           requestOptions
         );
 
@@ -152,7 +152,7 @@ function RegistrationLogin() {
         };
 
         fetch(
-          "https://taxitravellers.pythonanywhere.com/api/register/",
+          servieUrl.url + "api/register/",
           requestOptions
         )
           .then((response) => {

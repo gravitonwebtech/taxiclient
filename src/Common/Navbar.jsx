@@ -142,7 +142,7 @@ const Navbar = () => {
                   </Link>
                 </li>
 
-                <li>
+                {/* <li>
                   <Link
                     to="/about"
                     className=" hover:text-blue-500"
@@ -150,7 +150,7 @@ const Navbar = () => {
                   >
                     About
                   </Link>
-                </li>
+                </li> */}
 
                 <li>
                   <Link
@@ -325,7 +325,7 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <li>
+            {/* <li>
               <Link
                 to="/about"
                 className="hover:text-blue-500"
@@ -333,7 +333,7 @@ const Navbar = () => {
               >
                 About
               </Link>
-            </li>
+            </li> */}
 
             <li>
               <Link

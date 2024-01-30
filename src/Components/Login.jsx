@@ -88,7 +88,7 @@ function Login({ onClose }) {
         };
 
         const response = await fetch(
-          "https://taxitravellers.pythonanywhere.com/api/login/",
+          servieUrl.url + "api/login/",
           requestOptions
         );
 
@@ -150,7 +150,7 @@ const handleRegistrationSubmit = (e) => {
         redirect: "follow",
       };
 
-      fetch("https://taxitravellers.pythonanywhere.com/api/register/", requestOptions)
+      fetch(servieUrl.url + "api/register/", requestOptions)
         .then((response) => {
           if (!response.ok) {
             throw new Error("User registration failed");
