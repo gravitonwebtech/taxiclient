@@ -56,6 +56,25 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const [isLogoutVisible, setIsLogoutVisible] = useState(false);
+
+  const handleLogoutClick = () => {
+    setIsLogoutVisible(true);
+  };
+
+  const handleCancelClick = () => {
+    setIsLogoutVisible(false);
+  };
+
+  const handleLogoutSubmit = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("login");
+    localStorage.removeItem("userData");
+
+    navigate("/");
+    setIsLogoutVisible(false);
+  };
+
   return (
     <>
       <nav
@@ -301,10 +320,10 @@ const Navbar = () => {
                 localStorage.getItem("userData") !== "" ? (
                   <li>
                     <button
-                      onClick={() => LogoutHandle()}
+                       onClick={() => handleLogoutClick()}
                       className="hover:text-blue-500"
                     >
-                      LogOut
+                      Logout
                     </button>
                   </li>
                 ) : null}
@@ -485,7 +504,7 @@ const Navbar = () => {
             localStorage.getItem("userData") !== "" ? (
               <li>
                 <button
-                  onClick={() => LogoutHandle()}
+                  onClick={() => handleLogoutClick()}
                   className="hover:text-blue-500"
                 >
                   LogOut
@@ -504,6 +523,29 @@ const Navbar = () => {
       {/* Booking Modal */}
       {isBookingModalVisible && (
         <Booking onClose={() => setIsBookingModalVisible(false)} />
+      )}
+
+      {isLogoutVisible && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white p-8 rounded shadow-lg">
+            <h2 className="text-2xl mb-4">Are you sure?</h2>
+
+            <button
+              type="button"
+              onClick={handleCancelClick}
+              className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              onClick={handleLogoutSubmit}
+              className="bg-green-500 text-white px-4 py-2 rounded"
+            >
+              LogOut
+            </button>
+          </div>
+        </div>
       )}
     </>
   );
