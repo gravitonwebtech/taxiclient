@@ -61,6 +61,7 @@ export default function Home() {
     time: "",
     phone: "",
     name: "",
+    selectedCar: "",
   });
 
   // SelectedCar
@@ -100,7 +101,18 @@ export default function Home() {
   };
 
   const handleSelectTo = (selectedItem) => {
-    setSearchTermTo(selectedItem);
+    if (selectedItem === searchTerm) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        toaddress: "To Address cannot be the same as From Address.",
+      }));
+    } else {
+      setSearchTermTo(selectedItem);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        toaddress: "",
+      }));
+    }
     setSearchResultsTo([]); // Clear search results after selection
   };
 
@@ -164,6 +176,14 @@ export default function Home() {
       setErrors((prevErrors) => ({
         ...prevErrors,
         fromaddress: "From Address is required.",
+      }));
+      isFormValid = false;
+    }
+
+    if (!selectedCar.trim()) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        selectedCar: "Please Select a car.",
       }));
       isFormValid = false;
     }
@@ -244,14 +264,10 @@ export default function Home() {
         redirect: "follow",
       };
 
-      fetch(
-        servieUrl.url + "api/get_taxi/",
-        requestOptions
-      )
+      fetch(servieUrl.url + "api/get_taxi/", requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log(result);
-          console.log("newDatralkjdfsvsdj====", selectedCar);
+          
           navigate("/currentData");
         })
         .catch((error) => console.log("error", error));
@@ -264,6 +280,8 @@ export default function Home() {
         phone: "",
         name: "",
       });
+      setSearchTermTo("");
+      setSearchTerm("");
 
       setErrors({
         fromaddress: "",
@@ -276,275 +294,10 @@ export default function Home() {
     }
   };
 
-  //Car Selected
+  const currentDate = new Date().toISOString().split("T")[0];
 
   return (
     <>
-      {/* <div className="relative h-screen overflow-hidden">
-      <div className="absolute inset-0 w-full h-full">
-        {images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`Slider ${index + 1}`}
-            className={`absolute top-0 left-0 w-full h-full object-cover transition duration-1000 ease-in-out ${
-              index === currentImageIndex
-                ? "opacity-100 scale-125"
-                : "opacity-0 scale-100"
-            }`}
-          />
-        ))}
-      </div>
-      <div
-        className="absolute grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10 pt-24 md:pt-32 px-5 md:px-10 xl:px-20"
-      >
-        <div className="bg-white shadow rounded p-5 md:p-8 md:w-[600px]">
-            <form onSubmit={handleSubmit}>
-              <h1 className="text-center text-xl md:text-2xl font-bold">
-                GET TAXI
-                <span className="text-[#FFC61A]"> ONLINE</span>
-              </h1>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-5">
-                <div className="bg-[#FFC61A] flex justify-center p-5 rounded">
-                  <img src={Car1}></img>
-                </div>
-
-                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
-                  <img src={Car2}></img>
-                </div>
-
-                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
-                  <img src={Car3}></img>
-                </div>
-
-                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
-                  <img src={Car4}></img>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 mt-5 md:mt-10">
-                <p>
-                  <input
-                    type="text"
-                    id="fromaddress"
-                    name="fromaddress"
-                    placeholder="From Address..."
-                    value={formData.fromaddress}
-                    onChange={handleInputChange}
-                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
-                      formErrors.fromaddress && "border-red-500"
-                    }`}
-                  />
-                  {formErrors.fromaddress && (
-                    <span className="text-red-500">
-                      {formErrors.fromaddress}
-                    </span>
-                  )}
-                </p>
-                <p>
-                  <input
-                    type="text"
-                    id="toaddress"
-                    name="toaddress"
-                    placeholder="To Address...."
-                    value={formData.toaddress}
-                    onChange={handleInputChange}
-                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
-                      formErrors.toaddress && "border-red-500"
-                    }`}
-                  />
-                  {formErrors.toaddress && (
-                    <span className="text-red-500">{formErrors.toaddress}</span>
-                  )}
-                </p>
-                <p>
-                  <input
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    placeholder="Phone Number"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
-                      formErrors.phone && "border-red-500"
-                    }`}
-                  />
-                  {formErrors.phone && (
-                    <span className="text-red-500">{formErrors.phone}</span>
-                  )}
-                </p>
-                <p>
-                  <input
-                    type="text"
-                    id="datetime"
-                    name="datetime"
-                    placeholder="Date and Time"
-                    value={formData.datetime}
-                    onChange={handleInputChange}
-                    className={`w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2 ${
-                      formErrors.datetime && "border-red-500"
-                    }`}
-                  />
-                  {formErrors.datetime && (
-                    <span className="text-red-500">{formErrors.datetime}</span>
-                  )}
-                </p>
-              </div>
-
-              {formErrors.general && (
-                <div className="text-red-500 text-center mt-2">
-                  {formErrors.general}
-                </div>
-              )}
-
-              <div className="flex justify-center mt-5 md:mt-10">
-                <button
-                  type="submit"
-                  className="px-5 py-2 text-black font-bold border-2 border-gray-100 
-        text-lg rounded-[30px] bg-[#FFC61A]"
-                >
-                  GET TAXI
-                </button>
-              </div>
-            </form>
-          </div>
-      </div>
-      </div> */}
-
-      {/* banner */}
-      {/* <div className="home-banner-section mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 md:pt-20 px-5 md:px-10 xl:px-20">
-          <div className="bg-white shadow rounded p-5 md:p-8 md:w-[600px]">
-            <form onSubmit={handleSubmit}>
-              <h1 className="text-center text-xl md:text-2xl font-bold">
-                GET TAXI
-                <span className="text-[#FFC61A]"> ONLINE</span>
-              </h1>
-              <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-5">
-                <div className="bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
-                  <img src={Car1}></img>
-                  <h1 className="text-sm font-semibold text-center mt-2">
-                    Mini
-                  </h1>
-                </div>
-
-                <div className="hover:bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
-                  <img src={Car2}></img>
-                  <h1 className="text-sm font-semibold text-center mt-2">
-                    Syden
-                  </h1>
-                </div>
-
-                <div className="hover:bg-[#FFC61A] flex justify-center p-5 rounded">
-                  <img src={Car3}></img>
-                </div>
-
-                <div className="hover:bg-[#FFC61A] flex flex-col justify-center p-5 rounded cursor-pointer">
-                  <img src={Car4}></img>
-                  <h1 className="text-sm font-semibold text-center mt-2">
-                    SUV
-                  </h1>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 md:mt-10">
-                <p>
-                  <input
-                    type="text"
-                    id="fromaddress"
-                    name="fromaddress"
-                    placeholder="From Address..."
-                    value={formData.fromaddress}
-                    onChange={handleInputChange}
-                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
-                  />
-                  {errors.fromaddress && (
-                    <span className="text-red-500 text-sm">
-                      {errors.fromaddress}
-                    </span>
-                  )}
-                </p>
-                <p>
-                  <input
-                    type="text"
-                    id="toaddress"
-                    name="toaddress"
-                    placeholder="To Address...."
-                    value={formData.toaddress}
-                    onChange={handleInputChange}
-                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
-                  />
-                  {errors.toaddress && (
-                    <span className="text-red-500 text-sm">
-                      {errors.toaddress}
-                    </span>
-                  )}
-                </p>
-                <p>
-                  <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleInputChange}
-                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
-                  />
-                  {errors.date && (
-                    <span className="text-red-500 text-sm">{errors.date}</span>
-                  )}
-                </p>
-                <p>
-                  <input
-                    type="time"
-                    id="time"
-                    name="time"
-                    value={formData.time}
-                    onChange={handleInputChange}
-                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
-                  />
-                  {errors.time && (
-                    <span className="text-red-500 text-sm">{errors.time}</span>
-                  )}
-                </p>
-
-                <p>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    placeholder="Phone Number"
-                    value={formData.phone}
-                    onChange={(e) => {
-                      const numericValue = e.target.value.replace(
-                        /[^0-9]/g,
-                        ""
-                      );
-                      setFormData({
-                        ...formData,
-                        phone: numericValue,
-                      });
-                    }}
-                    className="w-full text-gray-500 border-2 border-gray-100 rounded px-5 py-2"
-                    maxLength="10"
-                  />
-                  {errors.phone && (
-                    <span className="text-red-500 text-sm">{errors.phone}</span>
-                  )}
-                </p>
-              </div>
-              <div className="flex justify-center mt-5 md:mt-10">
-                <button
-                  type="submit"
-                  className="px-5 py-2 text-black font-bold border-2 border-gray-100 
-                  text-lg rounded-[30px] bg-[#FFC61A]"
-                >
-                  GET TAXI
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div> */}
-
       <div className="home-banner-section mt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 md:pt-20 px-5 md:px-10 xl:px-20">
           <div className="bg-white bg-opacity-10 shadow rounded p-5 md:p-8 md:w-[600px]">
@@ -576,7 +329,6 @@ export default function Home() {
                     Syden
                   </h1>
                 </div>
-                {/* Add similar logic for other car types */}
                 <div
                   className={`flex flex-col justify-center p-5 rounded cursor-pointer ${
                     selectedCar === "SUV" ? "bg-[#FFC61A]" : ""
@@ -590,6 +342,11 @@ export default function Home() {
                 </div>
                           
               </div>
+              {errors.selectedCar && (
+                <span className="text-red-400 text-sm">
+                  {errors.selectedCar}
+                </span>
+              )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 ">
                 <p>
@@ -662,6 +419,7 @@ export default function Home() {
                     name="date"
                     value={formData.date}
                     onChange={handleInputChange}
+                    min={currentDate}
                     className="w-full text-white bg-transparent border-2 rounded px-5 py-2 placeholder-white focus:outline-none"
                   />
                   {errors.date && (

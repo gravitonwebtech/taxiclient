@@ -96,6 +96,7 @@ function Login({ onClose }) {
           // Credentials are correct
           const result = await response.text();
           localStorage.setItem("userData", loginFormData.email);
+
           navigate("/");
           console.log(result);
           onClose();

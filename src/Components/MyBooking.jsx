@@ -281,7 +281,7 @@ const MyBooking = () => {
                     <tr className="text-white">
                       <th className="p-4 border">Booking Id</th>
                       <th className="p-4 border">Name</th>
-                      <th className="p-4 border">Address</th>
+                      <th className="p-4 border">Number</th>
                       <th className="p-4 border">Vehicle Model</th>
                       <th className="p-4 border">Vehicle Number</th>
                       <th className="p-4 border">Seat Capacity</th>
