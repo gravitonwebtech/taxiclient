@@ -61,7 +61,7 @@ const MyBooking = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(servieUrl.url + "/api/drivers/");
+        const response = await fetch(servieUrl.url + "api/drivers/");
         const data = await response.json();
 
         // Assuming bookingId is stored in localData variable

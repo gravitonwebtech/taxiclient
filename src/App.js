@@ -10,6 +10,7 @@ import Booking from "./Components/Booking";
 import TaxiDataModal from "./Components/TaxiDataModal";
 import MyBooking from "./Components/MyBooking";
 import RegistrationLogin from "./Components/RegistrationLogin";
+import GoogleLocation from "./Components/GoogleLocation";
 
 function App() {
   return (
@@ -25,7 +26,10 @@ function App() {
         <Route path="/currentData" element={<TaxiDataModal />} />
         <Route path="/allBooking" element={<MyBooking />} />
         <Route path="/loginRegistration" element={<RegistrationLogin />} />
+        <Route path="/map" element={<GoogleLocation />} />
+
       </Routes>
+      
       <Footer />
     </>
   );
