@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { servieUrl } from "../env/env";
 import "./TaxiDataModel.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 
 const MyBooking = () => {
   const [taxiData, setTaxiData] = useState([]);
@@ -36,9 +38,7 @@ const MyBooking = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-         servieUrl.url + "api/get_taxi/"
-        );
+        const response = await fetch(servieUrl.url + "api/get_taxi/");
         const data = await response.json();
 
         // Assuming you want to set a single key, change 'item.someKey' to the key you want to use
@@ -55,8 +55,9 @@ const MyBooking = () => {
 
     fetchData();
   }, []);
-
-
+  const RefreshHandle=()=>{
+    window.location.reload();
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,29 +77,19 @@ const MyBooking = () => {
     };
 
     fetchData();
-  }, [booking]); // Add booking as a dependency to re-run the effect when it changes
-
-  // Rest of your code...
-
-  // ...
-
-  // ...
+  }, [booking]); 
   const [driverone, setDriverone] = useState([]);
 
   const GetTaxi = (bookingId) => {
     setOpen(!open);
-    alert(`Thank you for booking ID ${bookingId}`);
+    
 
     // Filter driverData based on bookingId
     const filteredDrivers = driverData.filter(
       (item) => bookingId === item.bookingId
     );
     setDriverone(filteredDrivers);
-
-
-   
   };
-
 
   const BackHandle = () => {
     setOpen(!open);
@@ -116,7 +107,12 @@ const MyBooking = () => {
             <div className="current-data bg-white bg-opacity-10 shadow rounded p-5 w-full mx-5 md:mx-14 lg:mx-20 xl:mx-28">
               <div className="flex justify-between">
                 <h2 className="text-2xl font-bold text-[#FFC61A]">
-                  Your Booked
+                  <span> Your Booked</span>
+                  <FontAwesomeIcon
+                    icon={faArrowsRotate}
+                    className="ml-2"
+                    onClick={RefreshHandle}
+                  />
                 </h2>
                 <div className="hidden md:block">
                   <button
@@ -286,8 +282,6 @@ const MyBooking = () => {
                       <th className="p-4 border">Vehicle Number</th>
                       <th className="p-4 border">Seat Capacity</th>
                       <th className="p-4 border">Total Amount</th>
-                      <th className="p-4 border">Amount Per Km</th>
-                      <th className="p-4 border">Sell Amount</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -300,8 +294,6 @@ const MyBooking = () => {
                         <td className="p-4 border">{driver.VehicleNumber}</td>
                         <td className="p-4 border">{driver.SeatCapacity}</td>
                         <td className="p-4 border">{driver.TotalAmount}</td>
-                        <td className="p-4 border">{driver.AmountPerKm}</td>
-                        <td className="p-4 border">{driver.SellAmount}</td>
                       </tr>
                     ))}
                   </tbody>

@@ -12,6 +12,7 @@ import MyBooking from "./Components/MyBooking";
 import RegistrationLogin from "./Components/RegistrationLogin";
 import GoogleLocation from "./Components/GoogleLocation";
 import InvoiceForm from "./Components/InvoiceForm";
+import ProfileCard from "./Components/ProfileCard";
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
         <Route path="/loginRegistration" element={<RegistrationLogin />} />
         <Route path="/map" element={<GoogleLocation />} />
         <Route path="/invoice" element={<InvoiceForm />} />
+        <Route path="/profile" element={<ProfileCard />} />
+
 
 
       </Routes>

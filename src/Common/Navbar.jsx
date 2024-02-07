@@ -30,19 +30,19 @@ const Navbar = () => {
     };
   }, []);
 
-  // Scroll to the top when the route changes
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  // login Popup
+ 
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const openLoginForm = () => {
     setIsLoginFormVisible(true);
     setIsDrawerOpen(false);
   };
 
-  // booking Popup
+
   const [isBookingModalVisible, setIsBookingModalVisible] = useState(false);
   const openBookingModal = () => {
     setIsBookingModalVisible(true);
@@ -291,9 +291,9 @@ const Navbar = () => {
                   <li>
                     <button
                       onClick={() => openLoginForm()}
-                      className="hover:text-blue-500"
+                      className="hover:text-blue-500 font-bold"
                     >
-                      Login
+                     Login/register
                     </button>
                   </li>
                 ) : null}
@@ -466,9 +466,9 @@ const Navbar = () => {
               <li>
                 <button
                   onClick={() => openLoginForm()}
-                  className="hover:text-blue-500"
+                  className="hover:text-blue-500 font-bold"
                 >
-                  Login
+                  Login/Register
                 </button>
               </li>
             ) : null}
@@ -515,7 +515,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Login Popup */}
       {isLoginFormVisible && (
         <Login onClose={() => setIsLoginFormVisible(false)} />
       )}

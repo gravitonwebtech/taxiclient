@@ -3,8 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { servieUrl } from "../env/env";
+import Popup from "./Popup";
 
 function Login({ onClose }) {
+  // POPUp
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   const [loginFormData, setLoginFormData] = useState({
     email: "",
     password: "",
@@ -41,12 +49,12 @@ function Login({ onClose }) {
 
   const handleRegistrationChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Allow the user to type more than 10 digits before showing an error
-    if (name === 'phoneNumber' && value.length > 10) {
+    if (name === "phoneNumber" && value.length > 10) {
       return;
     }
-  
+
     setRegistrationFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -96,7 +104,7 @@ function Login({ onClose }) {
           // Credentials are correct
           const result = await response.text();
           localStorage.setItem("userData", loginFormData.email);
-
+          
           navigate("/");
           console.log(result);
           onClose();
@@ -123,64 +131,67 @@ function Login({ onClose }) {
 
   const [username, setUserName] = useState("");
 
-const handleRegistrationSubmit = (e) => {
-  e.preventDefault();
-  const errors = validateRegistration();
-  if (Object.keys(errors).length === 0) {
-    setUserName(Math.floor(100000 + Math.random() * 900000));
+  const handleRegistrationSubmit = (e) => {
+    e.preventDefault();
+    const errors = validateRegistration();
+    if (Object.keys(errors).length === 0) {
+      setUserName(Math.floor(100000 + Math.random() * 900000));
 
-    // Move the subsequent code inside the then block
-    setUserName((newUsername) => {
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Cookie", "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu");
+      // Move the subsequent code inside the then block
+      setUserName((newUsername) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append(
+          "Cookie",
+          "csrftoken=tZQ0YhIzvFexGiWzliaB4MH6PoHbq2eu"
+        );
 
-      var raw = JSON.stringify({
-        username: newUsername,
-        password: registrationFormData.password,
-        fullname: registrationFormData.fullName,
-        email: registrationFormData.email,
-        phone_number: registrationFormData.phoneNumber,
-        address: registrationFormData.rePassword,
-      });
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      fetch(servieUrl.url + "api/register/", requestOptions)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("User registration failed");
-          }
-          return response.json();
-        })
-        .then((result) => {
-          alert("Form Submitted");
-          emailSending(newUsername);
-          setIsLogin(!isLogin);
-        })
-        .catch((error) => {
-          console.error("Error during registration:", error);
-          alert("User registration failed. Email is already registered.");
+        var raw = JSON.stringify({
+          username: newUsername,
+          password: registrationFormData.password,
+          fullname: registrationFormData.fullName,
+          email: registrationFormData.email,
+          phone_number: registrationFormData.phoneNumber,
+          address: registrationFormData.rePassword,
         });
 
-      setRegistrationFormData({
-        fullName: "",
-        email: "",
-        password: "",
-        rePassword: "",
-        phoneNumber: "",
-      });
-    });
-  } else {
-    setRegistrationErrors(errors);
-  }
-};
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
 
+        fetch(servieUrl.url + "api/register/", requestOptions)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("User registration failed");
+            }
+            return response.json();
+          })
+          .then((result) => {
+            alert("Check your mail for ID and password.");
+            emailSending(newUsername);
+            setIsLogin(!isLogin);
+            
+          })
+          .catch((error) => {
+            console.error("Error during registration:", error);
+            alert("User registration failed. Email is already registered.");
+          });
+
+        setRegistrationFormData({
+          fullName: "",
+          email: "",
+          password: "",
+          rePassword: "",
+          phoneNumber: "",
+        });
+      });
+    } else {
+      setRegistrationErrors(errors);
+    }
+  };
 
   const emailSending = (newUsername) => {
     var formdata = new FormData();
@@ -233,7 +244,10 @@ const handleRegistrationSubmit = (e) => {
     // }
 
     const validPhoneNumberRegex = /^[6-9]\d{9}$/;
-    if (!registrationFormData.phoneNumber.trim() || !validPhoneNumberRegex.test(registrationFormData.phoneNumber.trim())) {
+    if (
+      !registrationFormData.phoneNumber.trim() ||
+      !validPhoneNumberRegex.test(registrationFormData.phoneNumber.trim())
+    ) {
       errors.phoneNumber = "Enter Valid Number .";
     } else if (registrationFormData.phoneNumber.trim().length !== 10) {
       errors.phoneNumber = "Phone Number must have exactly 10 digits.";
@@ -254,6 +268,12 @@ const handleRegistrationSubmit = (e) => {
 
   return (
     <>
+      {showPopup && (
+        <Popup
+          message="Your are successsful login..."
+          onClose={handleClosePopup}
+        />
+      )}
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
         <div className="bg-white shadow-lg border-2 border-gray-200 rounded w-[400px] p-3 mx-5 md:mx-0">
           <div className="flex justify-between items-center mb-5">
@@ -282,7 +302,7 @@ const handleRegistrationSubmit = (e) => {
                     className={`border border-gray-300 w-full px-3 py-2 mb-2 rounded ${
                       loginErrors.email ? "border-red-500" : ""
                     }`}
-                    placeholder="Enter UserName"
+                    placeholder="Enter User Id"
                   />
                   {loginErrors.email && (
                     <span className="text-red-500">{loginErrors.email}</span>
@@ -305,9 +325,9 @@ const handleRegistrationSubmit = (e) => {
                   )}
                 </p>
 
-                <div className="mt-4 flex justify-end cursor-pointer">
+                {/* <div className="mt-4 flex justify-end cursor-pointer">
                   <h1 className="text-[#42B5DE]">Forget Password?</h1>
-                </div>
+                </div> */}
 
                 <div className="mt-5 flex justify-end">
                   <button
@@ -386,7 +406,7 @@ const handleRegistrationSubmit = (e) => {
                     name="password"
                     value={registrationFormData.password}
                     onChange={handleRegistrationChange}
-                    placeholder="Enter Password"
+                    placeholder="Create Password"
                     className={`border border-gray-300 w-full px-3 py-2 mb-2 mt-4 rounded ${
                       registrationErrors.password ? "border-red-500" : ""
                     }`}

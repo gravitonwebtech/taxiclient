@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { servieUrl } from "../env/env";
+import Popup from "./Popup";
 
 function RegistrationLogin() {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
   const [loginFormData, setLoginFormData] = useState({
     email: "",
     password: "",
@@ -39,12 +45,12 @@ function RegistrationLogin() {
 
   const handleRegistrationChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Allow the user to type more than 10 digits before showing an error
-    if (name === 'phoneNumber' && value.length > 10) {
+    if (name === "phoneNumber" && value.length > 10) {
       return;
     }
-  
+
     setRegistrationFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -87,7 +93,7 @@ function RegistrationLogin() {
         };
 
         const response = await fetch(
-        servieUrl.url +  "api/login/",
+          servieUrl.url + "api/login/",
           requestOptions
         );
 
@@ -149,10 +155,7 @@ function RegistrationLogin() {
           redirect: "follow",
         };
 
-        fetch(
-          servieUrl.url + "api/register/",
-          requestOptions
-        )
+        fetch(servieUrl.url + "api/register/", requestOptions)
           .then((response) => {
             if (!response.ok) {
               throw new Error("User registration failed");
@@ -160,9 +163,12 @@ function RegistrationLogin() {
             return response.json();
           })
           .then((result) => {
-            alert("Form Submitted");
+            // alert("Form Submitted");
             emailSending(newUsername);
-            setIsLogin(!isLogin);
+            setShowPopup(false);
+            setTimeout(() => {
+              setShowPopup(true);
+            }, 10000);
           })
           .catch((error) => {
             console.error("Error during registration:", error);
@@ -216,7 +222,10 @@ function RegistrationLogin() {
       errors.fullName = "Fullname is required";
     }
     const validPhoneNumberRegex = /^[6-9]\d{9}$/;
-    if (!registrationFormData.phoneNumber.trim() || !validPhoneNumberRegex.test(registrationFormData.phoneNumber.trim())) {
+    if (
+      !registrationFormData.phoneNumber.trim() ||
+      !validPhoneNumberRegex.test(registrationFormData.phoneNumber.trim())
+    ) {
       errors.phoneNumber = "Enter Valid Number .";
     } else if (registrationFormData.phoneNumber.trim().length !== 10) {
       errors.phoneNumber = "Phone Number must have exactly 10 digits.";
@@ -243,6 +252,12 @@ function RegistrationLogin() {
 
   return (
     <>
+      {showPopup && (
+        <Popup
+          message="Check your mail for ID and password."
+          onClose={handleClosePopup}
+        />
+      )}
       <div className="my-20 mt-20  flex items-center justify-center">
         <div className="bg-white shadow-lg border-2 border-gray-200 rounded w-[400px] p-3 mx-5 md:mx-0">
           <div className="flex justify-between items-center mb-5">
@@ -263,7 +278,7 @@ function RegistrationLogin() {
                     className={`border border-gray-300 w-full px-3 py-2 mb-2 rounded ${
                       loginErrors.email ? "border-red-500" : ""
                     }`}
-                    placeholder="Enter UserName"
+                    placeholder="Enter User ID"
                   />
                   {loginErrors.email && (
                     <span className="text-red-500">{loginErrors.email}</span>

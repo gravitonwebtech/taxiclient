@@ -64,12 +64,20 @@ export default function Home() {
     selectedCar: "",
   });
 
+  const [showPopup, setShowPopup] = useState(false);
+  const handleShowPopup = () => {
+    setShowPopup(true);
+
+    // Adjust the timeout as needed
+  };
+
   // SelectedCar
   const [selectedCar, setSelectedCar] = useState("");
 
   const handleCarSelect = (carType) => {
     // Log the selected car data to the console
     console.log(`Selected car: ${carType}`);
+
     setSelectedCar(carType);
   };
 
@@ -181,6 +189,7 @@ export default function Home() {
     }
 
     if (!selectedCar.trim()) {
+      handleShowPopup();
       setErrors((prevErrors) => ({
         ...prevErrors,
         selectedCar: "Please Select a car.",
@@ -267,7 +276,6 @@ export default function Home() {
       fetch(servieUrl.url + "api/get_taxi/", requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          
           navigate("/currentData");
         })
         .catch((error) => console.log("error", error));
@@ -295,9 +303,35 @@ export default function Home() {
   };
 
   const currentDate = new Date().toISOString().split("T")[0];
+  const onClose = () => {
+    setShowPopup(!showPopup);
+  };
 
   return (
     <>
+      {showPopup && (
+        <>
+          <div className="fixed z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+            <div className="bg-black p-5 rounded shadow-md">
+              <p className="text-red-500 text-center">
+                Please select a car before submitting.
+              </p>
+            </div>
+          </div>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="" onClick={onClose}></div>
+            <div className="bg-white p-5 text-xl rounded-md shadow-md">
+              <p>Please select a car before submitting.</p>
+              <button
+                className="mt-4 px-4 py-1  bg-blue-500 text-white rounded-md"
+                onClick={onClose}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </>
+      )}
       <div className="home-banner-section mt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 md:pt-20 px-5 md:px-10 xl:px-20">
           <div className="bg-white bg-opacity-10 shadow rounded p-5 md:p-8 md:w-[600px]">
@@ -306,7 +340,9 @@ export default function Home() {
                 Book Your Taxi
                 <span className="text-[#FFC61A]"> ONLINE</span>
               </h1>
-              <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-5">
+              <div
+                className={`grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-5 `}
+              >
                 <div
                   className={`flex flex-col justify-center p-5 rounded cursor-pointer ${
                     selectedCar === "Mini" ? "bg-[#FFC61A]" : ""
@@ -497,6 +533,9 @@ export default function Home() {
                 </button>
               </div>
             </form>
+          </div>
+          <div>
+          
           </div>
         </div>
       </div>
