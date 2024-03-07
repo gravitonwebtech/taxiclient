@@ -11,6 +11,15 @@ import Traffic3 from "../Assests/Homepageimages/tariff-3.png";
 import Traffic4 from "../Assests/Homepageimages/tariff-4.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faServicestack } from "@fortawesome/free-brands-svg-icons";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import slide1 from "../Assests/Homepageimages/slider1.jpg";
+import slide2 from "../Assests/Homepageimages/slider1.jpg";
+import slide3 from "../Assests/Homepageimages/slider1.jpg";
+import slide4 from "../Assests/Homepageimages/slider1.jpg";
+import slide5 from "../Assests/Homepageimages/slider1.jpg";
+
 import {
   faCheck,
   faBriefcase,
@@ -27,6 +36,22 @@ import data from "../data.json";
 import { servieUrl } from "../env/env";
 
 export default function Home() {
+  const homeSlideSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
+
+  const isSmallScreen = window.innerWidth <= 768;
+
+  if (isSmallScreen) {
+    homeSlideSettings.slidesToShow = 1;
+  }
   const images = [sliderimage1, sliderimage2];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -534,9 +559,7 @@ export default function Home() {
               </div>
             </form>
           </div>
-          <div>
-          
-          </div>
+          <div></div>
         </div>
       </div>
 
@@ -859,6 +882,161 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="mt-10 mx-10 md:mx-20 lg:mx-30">
+        <Slider {...homeSlideSettings}>
+          <div className="p-4">
+            <div
+              className="border border-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl
+              p-5 shadow-md bg-[#FFC61A] "
+            >
+              <div className="flex justify-center ">
+                <img src={slide2} alt="slide1" className="rounded-[10%]" />
+              </div>
+              <div className="text-center text-black">
+                <h1 className=" text-2xl mt-5  font-semibold">
+                  Agra, Uttar Pradesh
+                </h1>
+                <p className="mt-5 text-lg font-lg">
+                  Home to the magnificent Taj Mahal, Agra is a must-visit
+                  destination in India. Explore the grandeur of this UNESCO
+                  World Heritage site, along with other architectural marvels
+                  like Agra Fort and Fatehpur Sikri.
+                </p>
+                <p className="mt-5 text-lg font-lg">
+                  Full taxi Amount: Rs 5000 (3-day trip)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4">
+            <div
+              className="border border-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl
+               p-5 shadow-md bg-[#FFC61A] p-5"
+            >
+              <div className="flex justify-center ">
+                <img src={slide3} alt="slide1" className="rounded-[10%]" />
+              </div>
+              <div className="text-center text-black">
+                <h1 className=" text-2xl mt-5  font-semibold">
+                  Jaipur, Rajasthan
+                </h1>
+                <p className="mt-5 text-lg font-lg">
+                  Known as the Pink City, Jaipur is famous for its rich history,
+                  vibrant culture, and stunning architecture. Visit iconic
+                  landmarks such as the Hawa Mahal, Amer Fort, and City Palace.
+                  Enjoy shopping for traditional handicrafts and textiles in the
+                  bustling markets.
+                </p>
+                <p className="mt-5 text-lg font-lg font-semibold">
+                  Full taxi Amount: Rs 5000 (3-day trip)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4">
+            <div
+              className="border border-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl
+              p-5 shadow-md bg-[#FFC61A] "
+            >
+              <div className="flex justify-center ">
+                <img src={slide2} alt="slide1" className="rounded-[10%]" />
+              </div>
+              <div className="text-center text-black">
+                <h1 className=" text-2xl mt-5  font-semibold">
+                  Agra, Uttar Pradesh
+                </h1>
+                <p className="mt-5 text-lg font-lg">
+                  Home to the magnificent Taj Mahal, Agra is a must-visit
+                  destination in India. Explore the grandeur of this UNESCO
+                  World Heritage site, along with other architectural marvels
+                  like Agra Fort and Fatehpur Sikri.
+                </p>
+                <p className="mt-5 text-lg font-lg">
+                  Full taxi Amount: Rs 5000 (3-day trip)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4">
+            <div
+              className="border border-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl
+               p-5 shadow-md bg-[#FFC61A] p-5"
+            >
+              <div className="flex justify-center ">
+                <img src={slide3} alt="slide1" className="rounded-[10%]" />
+              </div>
+              <div className="text-center text-black">
+                <h1 className=" text-2xl mt-5  font-semibold">
+                  Jaipur, Rajasthan
+                </h1>
+                <p className="mt-5 text-lg font-lg">
+                  Known as the Pink City, Jaipur is famous for its rich history,
+                  vibrant culture, and stunning architecture. Visit iconic
+                  landmarks such as the Hawa Mahal, Amer Fort, and City Palace.
+                  Enjoy shopping for traditional handicrafts and textiles in the
+                  bustling markets.
+                </p>
+                <p className="mt-5 text-lg font-lg font-semibold">
+                  Full taxi Amount: Rs 5000 (3-day trip)
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="p-4">
+            <div
+              className="border border-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl
+              p-5 shadow-md bg-[#FFC61A] "
+            >
+              <div className="flex justify-center ">
+                <img src={slide2} alt="slide1" className="rounded-[10%]" />
+              </div>
+              <div className="text-center text-black">
+                <h1 className=" text-2xl mt-5  font-semibold">
+                  Agra, Uttar Pradesh
+                </h1>
+                <p className="mt-5 text-lg font-lg">
+                  Home to the magnificent Taj Mahal, Agra is a must-visit
+                  destination in India. Explore the grandeur of this UNESCO
+                  World Heritage site, along with other architectural marvels
+                  like Agra Fort and Fatehpur Sikri.
+                </p>
+                <p className="mt-5 text-lg font-lg">
+                  Full taxi Amount: Rs 5000 (3-day trip)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4">
+            <div
+              className="border border-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl
+               shadow-md bg-[#FFC61A] p-5"
+            >
+              <div className="flex justify-center ">
+                <img src={slide3} alt="slide1" className="rounded-[10%]" />
+              </div>
+              <div className="text-center text-black">
+                <h1 className=" text-2xl mt-5  font-semibold">
+                  Jaipur, Rajasthan
+                </h1>
+                <p className="mt-5 text-lg font-lg">
+                  Known as the Pink City, Jaipur is famous for its rich history,
+                  vibrant culture, and stunning architecture. Visit iconic
+                  landmarks such as the Hawa Mahal, Amer Fort, and City Palace.
+                  Enjoy shopping for traditional handicrafts and textiles in the
+                  bustling markets.
+                </p>
+                <p className="mt-5 text-lg font-lg font-semibold">
+                  Full taxi Amount: Rs 5000 (3-day trip)
+                </p>
+              </div>
+            </div>
+          </div>
+        </Slider>
       </div>
     </>
   );
