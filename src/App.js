@@ -13,6 +13,7 @@ import RegistrationLogin from "./Components/RegistrationLogin";
 import GoogleLocation from "./Components/GoogleLocation";
 import InvoiceForm from "./Components/InvoiceForm";
 import ProfileCard from "./Components/ProfileCard";
+import Calculate from "./Components/Calculate";
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
         <Route path="/map" element={<GoogleLocation />} />
         <Route path="/invoice" element={<InvoiceForm />} />
         <Route path="/profile" element={<ProfileCard />} />
+        <Route path="/cal" element={<Calculate />} />
+
 
 
 

@@ -33,8 +33,10 @@ const GoogleLocation = () => {
   const [destination, setDestination] = useState('');
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
+  const [originAutocomplete, setOriginAutocomplete] = useState(null);
+  const [destinationAutocomplete, setDestinationAutocomplete] = useState(null);
 
-  const apiKey = 'AIzaSyDsowYI0vycxLqTE2Lvr3I9UErnBDo8Sbg';
+  const apiKey = 'AIzaSyCP266W0_rbXWYld5T0YHE7NshSL8mc9-g';
 
   const directionsCallback = (response) => {
     if (response !== null) {
@@ -54,26 +56,50 @@ const GoogleLocation = () => {
   };
 
   return (
-    <div className='mt-72'>
+    <div className='mt-56'>
       <h1 className="text-2xl font-bold mb-4">Google Map Distance</h1>
       <div style={controlPanelStyle}>
         <div className="mb-2">
           <label className="block text-sm font-medium text-gray-700">Origin</label>
-          <input
-            type="text"
-            value={origin}
-            onChange={(e) => setOrigin(e.target.value)}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-          />
+          <Autocomplete
+            onLoad={(autocomplete) => {
+              // Set the origin autocomplete instance
+              setOriginAutocomplete(autocomplete);
+              autocomplete.setFields(['formatted_address']);
+            }}
+            onPlaceChanged={() => {
+              const place = originAutocomplete.getPlace();
+              setOrigin(place.formatted_address);
+            }}
+          >
+            <input
+              type="text"
+              value={origin}
+              onChange={(e) => setOrigin(e.target.value)}
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+            />
+          </Autocomplete>
         </div>
         <div className="mb-2">
           <label className="block text-sm font-medium text-gray-700">Destination</label>
-          <input
-            type="text"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-          />
+          <Autocomplete
+            onLoad={(autocomplete) => {
+              // Set the destination autocomplete instance
+              setDestinationAutocomplete(autocomplete);
+              autocomplete.setFields(['formatted_address']);
+            }}
+            onPlaceChanged={() => {
+              const place = destinationAutocomplete.getPlace();
+              setDestination(place.formatted_address);
+            }}
+          >
+            <input
+              type="text"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+            />
+          </Autocomplete>
         </div>
         <button
           onClick={handleCalculateRoute}
